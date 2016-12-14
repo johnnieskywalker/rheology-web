@@ -5,29 +5,39 @@
 </h:head>
 <h:body>
     <ui:composition template="/WEB-INF/template/commonLayout.xhtml">
-    <ui:define name="content">
+        <ui:define name="content">
 
 
-    <h:form enctype="multipart/form-data" style="display: table-caption;">
-        <p:growl id="messages" showDetail="true" />
-        <div style="display: inline-flex;">
-            <p:fileUpload path="#{fileUploadView.uploadedFile}" mode="simple" skinSimple="true" />
+            <h:form enctype="multipart/form-data" style="display: table-caption;">
+                <p:growl id="messages" showDetail="true"/>
+                <div style="display: inline-flex;">
+                    <p:fileUpload value="#{fileUploadView.uploadedFile}"
+                                  invalidFileMessage="JournalDev: Invalid File Type"
+                                  mode="advanced" multiple="true"
+                                  label="Przeglądaj"
+                                  cancelLabel="Anuluj"
+                                  uploadLabel="Wyślij"
+                                  dragDropSupport="true"
+                                  allowTypes="/(\.|\/)(txt)$/"
+                                  fileUploadListener="#{fileUploadView.fileUploadListener}"
 
-        </div>
-        <p:commandButton value="Wyślij" ajax="false" actionListener="#{fileUploadView.upload}" />
-    </h:form>
+                    ></p:fileUpload>
+
+                </div>
+            </h:form>
+            <h3 style="font-family: Verdana">Prześlij pliki korzystając z powyższego menu lub przeciągnij i upuść</h3>
 
 
-    <p:dock position="bottom">
-        <p:menuitem path="Ładuj dane" icon="/icons/upload_file_icon_blue.png" url="load.xhtml"/>
-        <p:menuitem path="Tabela" icon="/icons/table.png" url="load.xhtml"/>
-        <p:menuitem path="Wykres" icon="/icons/graph.png" url="load.xhtml"/>
-        <p:menuitem path="Konsola" icon="/icons/terminal.png" url="load.xhtml"/>
-        <p:menuitem path="Historia Optymalizacji" icon="/icons/history.png" url="load.xhtml"/>
+            <p:dock position="bottom">
+                <p:menuitem path="Ładuj dane" icon="/icons/upload_file_icon_blue.png" url="load.xhtml"/>
+                <p:menuitem path="Tabela" icon="/icons/table.png" url="load.xhtml"/>
+                <p:menuitem path="Wykres" icon="/icons/graph.png" url="load.xhtml"/>
+                <p:menuitem path="Konsola" icon="/icons/terminal.png" url="load.xhtml"/>
+                <p:menuitem path="Historia Optymalizacji" icon="/icons/history.png" url="load.xhtml"/>
 
-    </p:dock>
+            </p:dock>
 
-    </ui:define>
+        </ui:define>
     </ui:composition>
 </h:body>
 </html>

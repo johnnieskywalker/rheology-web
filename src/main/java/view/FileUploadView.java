@@ -1,11 +1,13 @@
 package view;
 
 import org.apache.commons.io.FilenameUtils;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 import utils.SystemPaths;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +17,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 @ManagedBean
+@SessionScoped
 public class FileUploadView {
 
     private UploadedFile uploadedFile;
@@ -27,7 +30,11 @@ public class FileUploadView {
         this.uploadedFile = uploadedFile;
     }
 
-    public  void upload() {
+    public void fileUploadListener(FileUploadEvent e) {
+        // Get uploaded file from the FileUploadEvent
+        this.uploadedFile = e.getFile();
+        // Print out the information of the file
+        System.out.println("Uploaded File Name Is :: " + uploadedFile.getFileName() + " :: Uploaded File Size :: " + uploadedFile.getSize());
         if (uploadedFile != null) {
             try {
                 InputStream upladedFileInput = uploadedFile.getInputstream();
@@ -48,7 +55,6 @@ public class FileUploadView {
                 FacesMessage message = new FacesMessage(exception.getStackTrace().toString());
                 FacesContext.getCurrentInstance().addMessage(null, message);
             }
-
         }
     }
 }
