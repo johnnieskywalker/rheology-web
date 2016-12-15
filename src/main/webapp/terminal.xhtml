@@ -1,0 +1,23 @@
+<html xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/template/commonLayout.xhtml">
+        <ui:define name="content">
+
+            <h:form>
+                <p:focus for="terminal" />
+
+                <p:terminal id="terminal" widgetVar="term" commandHandler="#{terminalView.handleCommand}"
+                            welcomeMessage="Witaj w terminalu aplikacji Rheology Web aby zobaczyć listę komend wpisz help"
+                prompt="> "/>
+
+                <p:commandButton type="button" value="Clear" icon="ui-icon-trash" onclick="PF('term').clear()" style="margin-top:10px"/>
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>

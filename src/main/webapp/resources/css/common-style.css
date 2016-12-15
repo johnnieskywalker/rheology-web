@@ -8,3 +8,9 @@
     z-index: 30 !important;
     overflow: visible !important;
 }
+
+.ui-terminal {
+    background-color: black;
+    color: chartreuse;
+    font-family: Consolas;
+}
