@@ -4,6 +4,7 @@ public enum TerminalCommands {
     GREET("greet"),
     DATE("date"),
     LIST_FILES("ls"),
+    READ_FILE("read"),
     HELP("help");
 
     private final String text;

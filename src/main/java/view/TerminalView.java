@@ -1,10 +1,13 @@
 package view;
 
+import utils.FileUtils;
 import utils.SystemPaths;
 import utils.TerminalCommands;
 
 import javax.faces.bean.ManagedBean;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -23,8 +26,22 @@ public class TerminalView {
             return new Date().toString();
         } else if (command.equals(TerminalCommands.LIST_FILES.toString())) {
             return handleListFiles();
-        } else{
+        }
+        else if (command.equals(TerminalCommands.READ_FILE.toString())){
+            return handleReadFile(params);
+        }
+        else{
             return command + " not found";
+        }
+    }
+
+    private String handleReadFile(String[] params) {
+        try {
+            return FileUtils.readFile(SystemPaths.TOMCAT_UPLOAD_FOLDER.toString()+"\\"+params[0], StandardCharsets
+                    .UTF_8);
+        }
+        catch (IOException exception){
+            return exception.getMessage();
         }
     }
 
