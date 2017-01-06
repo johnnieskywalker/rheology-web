@@ -1,4 +1,4 @@
-package pl.horbo.everything;
+package serverRuntime.startconfig;
 
 import lombok.Getter;
 import lombok.Setter;
