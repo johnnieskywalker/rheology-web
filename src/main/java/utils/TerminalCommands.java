@@ -3,6 +3,7 @@ package utils;
 public enum TerminalCommands {
     GREET("greet"),
     DATE("date"),
+    LAST_FILE("lastFile"),
     LIST_FILES("ls"),
     READ_FILE("read"),
     HELP("help");

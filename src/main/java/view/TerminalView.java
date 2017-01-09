@@ -3,8 +3,10 @@ package view;
 import utils.FileUtils;
 import utils.SystemPaths;
 import utils.TerminalCommands;
+import view.cache.GlobalCache;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -29,6 +31,14 @@ public class TerminalView {
         }
         else if (command.equals(TerminalCommands.READ_FILE.toString())){
             return handleReadFile(params);
+        }
+        else if(command.equals(TerminalCommands.LAST_FILE.toString())){
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            GlobalCache globalCache
+                    = (GlobalCache)facesContext.getApplication()
+                    .createValueBinding("#{globalCache}").getValue(facesContext);
+            System.out.println(globalCache.getLastUploadedFilePath().getFileName());
+            return globalCache.getLastUploadedFilePath().getFileName().toString();
         }
         else{
             return command + " not found";
