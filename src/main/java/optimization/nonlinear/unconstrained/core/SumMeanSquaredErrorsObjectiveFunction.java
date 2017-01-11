@@ -17,7 +17,7 @@ package optimization.nonlinear.unconstrained.core;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SumMeanSquaredErrors implements ObjectiveFunction{
+public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFunction{
     /** Constant. The stepsize geometric shrink. */
     public static final double RHO_BEGIN = 0.4;
     public  static final int NUMBER_OF_POINTS = 9;
@@ -58,10 +58,10 @@ public final class SumMeanSquaredErrors implements ObjectiveFunction{
     }
 
     public static void setDeformations(List<Double> deformations) {
-        SumMeanSquaredErrors.deformations = deformations;
+        SumMeanSquaredErrorsObjectiveFunction.deformations = deformations;
     }
 
     public static void setExperimentalStresses(List<Double> experimentalStresses) {
-        SumMeanSquaredErrors.experimentalStresses = experimentalStresses;
+        SumMeanSquaredErrorsObjectiveFunction.experimentalStresses = experimentalStresses;
     }
 }

@@ -1,15 +1,15 @@
 package optimization.nonlinear.unconstrained.core;
 
-import optimization.nonlinear.unconstrained.dataloaders.TextToListReader;
+import dataloaders.FileToDoublesListReader;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
 public class ApproximationFromFileTask {
 
-    SumMeanSquaredErrors sumMeanSquaredErrors = new SumMeanSquaredErrors();
+    SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
 
-    TextToListReader textToArrayListReader = new TextToListReader();
+    FileToDoublesListReader textToArrayListReader = new FileToDoublesListReader();
 
     public void loadExperimentalDataFromFiles(File experimentalStressFile, File deformationsFile){
         try {
@@ -37,19 +37,19 @@ public class ApproximationFromFileTask {
     }
 
     public void loadExperimentalStressFromFile(File file) throws FileNotFoundException{
-     sumMeanSquaredErrors.setExperimentalStresses(textToArrayListReader.readFileToDoubles(file));
+     sumMeanSquaredErrorsObjectiveFunction.setExperimentalStresses(textToArrayListReader.readFileToDoubles(file));
     }
 
 
     public void loadDeformationsFromFile(File file) throws FileNotFoundException{
-        sumMeanSquaredErrors.setDeformations(textToArrayListReader.readFileToDoubles(file));
+        sumMeanSquaredErrorsObjectiveFunction.setDeformations(textToArrayListReader.readFileToDoubles(file));
     }
 
-    public SumMeanSquaredErrors getSumMeanSquaredErrors() {
-        return sumMeanSquaredErrors;
+    public SumMeanSquaredErrorsObjectiveFunction getSumMeanSquaredErrorsObjectiveFunction() {
+        return sumMeanSquaredErrorsObjectiveFunction;
     }
 
-    public void setSumMeanSquaredErrors(SumMeanSquaredErrors sumMeanSquaredErrors) {
-        this.sumMeanSquaredErrors = sumMeanSquaredErrors;
+    public void setSumMeanSquaredErrorsObjectiveFunction(SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction) {
+        this.sumMeanSquaredErrorsObjectiveFunction = sumMeanSquaredErrorsObjectiveFunction;
     }
 }

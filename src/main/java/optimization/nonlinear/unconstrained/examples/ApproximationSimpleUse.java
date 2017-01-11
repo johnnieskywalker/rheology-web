@@ -1,6 +1,6 @@
 package optimization.nonlinear.unconstrained.examples;
 
-import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrors;
+import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
 import optimization.nonlinear.unconstrained.core.Hooke;
 
 public class ApproximationSimpleUse {
@@ -8,16 +8,16 @@ public class ApproximationSimpleUse {
 
     public static void main(final String[] args) {
 
-        SumMeanSquaredErrors sumMeanSquaredErrors = new SumMeanSquaredErrors();
+        SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
 
 
         Hooke hooke = new Hooke();
 
-        mockExperimentalData(sumMeanSquaredErrors);
+        mockExperimentalData(sumMeanSquaredErrorsObjectiveFunction);
 
         int nVars = 2;
         int iterMax = Hooke.MAXIMUM_NUMBER_OF_ITERATIONS;
-        double rho = sumMeanSquaredErrors.RHO_BEGIN;
+        double rho = sumMeanSquaredErrorsObjectiveFunction.RHO_BEGIN;
         double epsilon = Hooke.ENDING_VALUE_OF_STEPSIZE;
         double[] endPt = new double[Hooke.MAXIMUM_NUMBER_OF_VARIABLES];
         double[] startPt = new double[Hooke.MAXIMUM_NUMBER_OF_VARIABLES];
@@ -25,7 +25,7 @@ public class ApproximationSimpleUse {
         startPt[Hooke.INDEX_ONE] = 0.1;
 
         hooke.findMinimum(
-                nVars, startPt, endPt, rho, epsilon, iterMax, sumMeanSquaredErrors);
+                nVars, startPt, endPt, rho, epsilon, iterMax, sumMeanSquaredErrorsObjectiveFunction);
         int numberOfIterations = hooke.getNumberOfIterations();
 
         printResults(nVars, numberOfIterations, endPt);
@@ -43,12 +43,12 @@ public class ApproximationSimpleUse {
         }
     }
 
-    public static void mockExperimentalData(SumMeanSquaredErrors aproximationSimple) {
+    public static void mockExperimentalData(SumMeanSquaredErrorsObjectiveFunction aproximationSimple) {
         mockDeformations(aproximationSimple);
         mockExperimentalStress(aproximationSimple);
     }
 
-    private static void mockDeformations(SumMeanSquaredErrors aproximationSimple) {
+    private static void mockDeformations(SumMeanSquaredErrorsObjectiveFunction aproximationSimple) {
         double deformationMultiplier = 0.1;
         for (int deformationNumber = 0; deformationNumber < aproximationSimple.NUMBER_OF_POINTS;
              deformationNumber++) {
@@ -56,7 +56,7 @@ public class ApproximationSimpleUse {
         }
     }
 
-    private static void mockExperimentalStress(SumMeanSquaredErrors aproximationSimple) {
+    private static void mockExperimentalStress(SumMeanSquaredErrorsObjectiveFunction aproximationSimple) {
         double stressMultiplier = 0.45;
         for (int stressNumber = 0; stressNumber < aproximationSimple.NUMBER_OF_POINTS; stressNumber++) {
             aproximationSimple.getExperimentalStresses().add(stressNumber * stressMultiplier);

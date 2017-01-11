@@ -14,7 +14,7 @@ public class ApproximationKperzynsTask {
         loadExperimentalData(approximationFromFileTask);
 
         int numberOfVariables = 2;
-        double rho = approximationFromFileTask.getSumMeanSquaredErrors().RHO_BEGIN;
+        double rho = approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().RHO_BEGIN;
         double epsilon = Hooke.ENDING_VALUE_OF_STEPSIZE;
         double[] resultPoints = new double[Hooke.MAXIMUM_NUMBER_OF_VARIABLES];
         double[] startPoint = new double[Hooke.MAXIMUM_NUMBER_OF_VARIABLES];
@@ -24,7 +24,7 @@ public class ApproximationKperzynsTask {
         Hooke hooke = new Hooke();
         hooke.findMinimum(
                 numberOfVariables, startPoint, resultPoints, rho, epsilon, Hooke.MAXIMUM_NUMBER_OF_ITERATIONS,
-                approximationFromFileTask.getSumMeanSquaredErrors());
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction());
         int numberOfIterations = hooke.getNumberOfIterations();
 
         printResults(numberOfVariables, numberOfIterations, resultPoints);

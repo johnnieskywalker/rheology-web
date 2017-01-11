@@ -1,12 +1,17 @@
-package optimization.nonlinear.unconstrained.dataloaders;
+package dataloaders;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class TextToListReader {
+public class FileToDoublesListReader {
+
+    public List<Double> readFileToDoubles(Path filePath) throws FileNotFoundException {
+        return readFileToDoubles(filePath);
+    }
 
     public List<Double> readFileToDoubles(String filePath) throws FileNotFoundException {
         return readFileToDoubles(new File(filePath));
@@ -23,9 +28,6 @@ public class TextToListReader {
         }
 
         equationDataFile.close();
-
-        equationDataFile.close();
         return list;
     }
-
 }

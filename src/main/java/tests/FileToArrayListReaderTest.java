@@ -1,6 +1,6 @@
-package optimization.nonlinear.unconstrained.testes;
+package tests;
 
-import optimization.nonlinear.unconstrained.dataloaders.TextToListReader;
+import dataloaders.FileToDoublesListReader;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,18 +11,17 @@ import java.util.List;
 
 import static junit.framework.TestCase.assertEquals;
 
-public class TextToArrayListReaderTest {
+public class FileToArrayListReaderTest {
     List<Double> fileReadAsDoubles = new ArrayList<>();
 
     @Before
     public void setUp() throws Exception {
-        TextToListReader textToArrayListReader = new TextToListReader();
+        FileToDoublesListReader textToArrayListReader = new FileToDoublesListReader();
 
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource("optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalDeformation").getFile());
 
         fileReadAsDoubles = textToArrayListReader.readFileToDoubles(file);
-
     }
 
     @After
