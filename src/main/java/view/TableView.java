@@ -3,13 +3,14 @@ package view;
 import view.wrappers.TableRowWrapper;
 
 import javax.faces.bean.ManagedBean;
-import java.util.ArrayList;
+import javax.faces.bean.SessionScoped;
 import java.util.List;
 
 @ManagedBean(name="tableView")
+@SessionScoped
 public class TableView {
 
-    List<TableRowWrapper> tableRowWrappers = new ArrayList<>();
+    List<TableRowWrapper> tableRowWrappers;
 
 
     public List<TableRowWrapper> getTableRowWrappers() {

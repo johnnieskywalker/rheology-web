@@ -19,11 +19,13 @@ public class ViewsDataController {
 
     private Path lastUploadedFilePath;
 
+    private FacesContext facesContext;
+
     private TableView tableViewBean;
 
     @PostConstruct
     public void init() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
+        facesContext = FacesContext.getCurrentInstance();
         tableViewBean
                 = (TableView)facesContext.getApplication()
                 .createValueBinding("#{tableView}").getValue(facesContext);

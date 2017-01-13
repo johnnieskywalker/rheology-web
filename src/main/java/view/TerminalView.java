@@ -34,11 +34,11 @@ public class TerminalView {
         }
         else if(command.equals(TerminalCommands.LAST_FILE.toString())){
             FacesContext facesContext = FacesContext.getCurrentInstance();
-            ViewsDataController globalCache
+            ViewsDataController viewsDataController
                     = (ViewsDataController)facesContext.getApplication()
                     .createValueBinding("#{viewsDataController}").getValue(facesContext);
-            System.out.println(globalCache.getLastUploadedFilePath().getFileName());
-            return globalCache.getLastUploadedFilePath().getFileName().toString();
+            System.out.println(viewsDataController.getLastUploadedFilePath().getFileName());
+            return viewsDataController.getLastUploadedFilePath().getFileName().toString();
         }
         else{
             return command + " not found";

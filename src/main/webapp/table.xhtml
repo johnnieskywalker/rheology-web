@@ -6,18 +6,18 @@
 <h:body>
     <ui:composition template="/WEB-INF/template/commonLayout.xhtml">
         <ui:define name="content">
-            <p:dataTable var="car" value="#{dtStickyView.cars}" stickyHeader="true">
+            <p:dataTable var="row" value="#{tableView.tableRowWrappers}" stickyHeader="true">
                 <p:column headerText="Odkształcenie">
-                    <h:outputText value="#{car.id}"/>
+                    <h:outputText value="#{row.deformation}"/>
                 </p:column>
                 <p:column headerText="Naprężenie Zmierzone">
-                    <h:outputText value="#{car.year}"/>
+                    <h:outputText value="#{row.experimentalStress}"/>
                 </p:column>
                 <p:column headerText="Naprężenie wyliczone">
-                    <h:outputText value="#{car.brand}"/>
+                    <h:outputText value="#{row.calculatedStress}"/>
                 </p:column>
                 <p:column headerText="Błąd średniokwadratowy">
-                    <h:outputText value="#{car.color}"/>
+                    <h:outputText value="#{row.meanSquaredError}"/>
                 </p:column>
             </p:dataTable>
 
