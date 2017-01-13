@@ -1,6 +1,6 @@
 package view.wrappers;
 
-public class TableWrapper {
+public class TableRowWrapper {
 
     double deformation;
 
@@ -10,7 +10,7 @@ public class TableWrapper {
 
     double meanSquaredError;
 
-    public TableWrapper(double deformation, double experimentalStress) {
+    public TableRowWrapper(double deformation, double experimentalStress) {
         this.deformation = deformation;
         this.experimentalStress = experimentalStress;
     }

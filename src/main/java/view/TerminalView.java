@@ -3,7 +3,7 @@ package view;
 import utils.FileUtils;
 import utils.SystemPaths;
 import utils.TerminalCommands;
-import view.cache.GlobalCache;
+import view.cache.ViewsDataController;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -34,9 +34,9 @@ public class TerminalView {
         }
         else if(command.equals(TerminalCommands.LAST_FILE.toString())){
             FacesContext facesContext = FacesContext.getCurrentInstance();
-            GlobalCache globalCache
-                    = (GlobalCache)facesContext.getApplication()
-                    .createValueBinding("#{globalCache}").getValue(facesContext);
+            ViewsDataController globalCache
+                    = (ViewsDataController)facesContext.getApplication()
+                    .createValueBinding("#{viewsDataController}").getValue(facesContext);
             System.out.println(globalCache.getLastUploadedFilePath().getFileName());
             return globalCache.getLastUploadedFilePath().getFileName().toString();
         }

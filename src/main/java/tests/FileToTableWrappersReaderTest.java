@@ -3,7 +3,7 @@ package tests;
 import dataloaders.FileToTableWrappersReader;
 import org.junit.Before;
 import org.junit.Test;
-import view.wrappers.TableWrapper;
+import view.wrappers.TableRowWrapper;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ import java.util.List;
 import static junit.framework.TestCase.assertEquals;
 
 public class FileToTableWrappersReaderTest {
-    List<TableWrapper> tableWrappers = new ArrayList<>();
+    List<TableRowWrapper> tableWrappers = new ArrayList<>();
 
     @Before
     public void setUp() throws Exception {
@@ -25,7 +25,6 @@ public class FileToTableWrappersReaderTest {
 
         tableWrappers = textToArrayListReader.readFileToTableWrappers(file);
     }
-
 
     @Test
     public void shouldBeSize37() {
@@ -41,5 +40,4 @@ public class FileToTableWrappersReaderTest {
     public void lastElementEqualsLastValueFromFile() {
         assertEquals(0.3571, new Double(tableWrappers.get(36).getDeformation()));
     }
-
 }

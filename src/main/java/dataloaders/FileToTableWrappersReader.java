@@ -1,6 +1,6 @@
 package dataloaders;
 
-import view.wrappers.TableWrapper;
+import view.wrappers.TableRowWrapper;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,9 +10,9 @@ import java.util.Scanner;
 
 public class FileToTableWrappersReader {
 
-    public List<TableWrapper> readFileToTableWrappers(File file) throws FileNotFoundException {
+    public static List<TableRowWrapper> readFileToTableWrappers(File file) throws FileNotFoundException {
         Scanner equationDataFile = new Scanner(file);
-        List<TableWrapper> tableWrappers = new ArrayList<>();
+        List<TableRowWrapper> tableWrappers = new ArrayList<>();
 
         while (equationDataFile.hasNextLine()) {
             String line = equationDataFile.nextLine();
@@ -20,7 +20,7 @@ public class FileToTableWrappersReader {
             String[] rowValues = line.split(" ");
             double deformation = Double.valueOf(rowValues[0]);
             double experimentalStress = Double.valueOf(rowValues[1]);
-            tableWrappers.add(new TableWrapper(deformation,experimentalStress));
+            tableWrappers.add(new TableRowWrapper(deformation,experimentalStress));
         }
 
         equationDataFile.close();
