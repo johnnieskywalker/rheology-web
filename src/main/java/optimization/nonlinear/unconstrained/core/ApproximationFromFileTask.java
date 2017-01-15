@@ -7,9 +7,10 @@ import java.io.FileNotFoundException;
 
 public class ApproximationFromFileTask {
 
-    SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
+    protected SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new
+            SumMeanSquaredErrorsObjectiveFunction();
 
-    FileToDoublesListReader textToArrayListReader = new FileToDoublesListReader();
+    protected FileToDoublesListReader textToArrayListReader = new FileToDoublesListReader();
 
     public void loadExperimentalDataFromFiles(File experimentalStressFile, File deformationsFile){
         try {

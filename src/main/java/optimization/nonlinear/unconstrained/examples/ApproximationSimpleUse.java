@@ -1,7 +1,7 @@
 package optimization.nonlinear.unconstrained.examples;
 
 import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
-import optimization.nonlinear.unconstrained.core.Hooke;
+import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
 
 public class ApproximationSimpleUse {
 
@@ -11,26 +11,26 @@ public class ApproximationSimpleUse {
         SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
 
 
-        Hooke hooke = new Hooke();
+        HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
 
         mockExperimentalData(sumMeanSquaredErrorsObjectiveFunction);
 
         int nVars = 2;
-        int iterMax = Hooke.MAXIMUM_NUMBER_OF_ITERATIONS;
-        double rho = sumMeanSquaredErrorsObjectiveFunction.RHO_BEGIN;
-        double epsilon = Hooke.ENDING_VALUE_OF_STEPSIZE;
-        double[] endPt = new double[Hooke.MAXIMUM_NUMBER_OF_VARIABLES];
-        double[] startPt = new double[Hooke.MAXIMUM_NUMBER_OF_VARIABLES];
-        startPt[Hooke.INDEX_ZERO] = 0.1;
-        startPt[Hooke.INDEX_ONE] = 0.1;
+        int iterMax = HookeAlgorithm.MAXIMUM_NUMBER_OF_ITERATIONS;
+        double rho = sumMeanSquaredErrorsObjectiveFunction.STRPSIZE_GEOMETRIC_SHRINK_RHO;
+        double epsilon = HookeAlgorithm.ENDING_VALUE_OF_STEPSIZE;
+        double[] endPt = new double[HookeAlgorithm.MAXIMUM_NUMBER_OF_VARIABLES];
+        double[] startPt = new double[HookeAlgorithm.MAXIMUM_NUMBER_OF_VARIABLES];
+        startPt[HookeAlgorithm.INDEX_ZERO] = 0.1;
+        startPt[HookeAlgorithm.INDEX_ONE] = 0.1;
 
-        hooke.findMinimum(
+        hookeAlgorithm.findMinimum(
                 nVars, startPt, endPt, rho, epsilon, iterMax, sumMeanSquaredErrorsObjectiveFunction);
-        int numberOfIterations = hooke.getNumberOfIterations();
+        int numberOfIterations = hookeAlgorithm.getNumberOfIterations();
 
         printResults(nVars, numberOfIterations, endPt);
         System.out.println("\n\nin hooke object:");
-        printResults(nVars, numberOfIterations, hooke.getResultPointCoordinates());
+        printResults(nVars, numberOfIterations, hookeAlgorithm.getResultPointCoordinates());
     }
 
     private static void printResults(int nVars, int numberOfIterations, double[] endPt) {

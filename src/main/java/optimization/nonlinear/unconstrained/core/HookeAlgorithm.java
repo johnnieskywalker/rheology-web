@@ -14,7 +14,7 @@
 
 package optimization.nonlinear.unconstrained.core;
 
-public class Hooke implements SearchMethod {
+public class HookeAlgorithm implements SearchMethod {
     public static final int MAXIMUM_NUMBER_OF_VARIABLES = 250;
 
     public static final double ENDING_VALUE_OF_STEPSIZE = 1E-6;
@@ -27,9 +27,13 @@ public class Hooke implements SearchMethod {
 
     private int numberOfIterations = 0;
 
-    double[] resultPointCoordinates;
+    private double[] resultPointCoordinates;
 
     private int numberOfFunctionEvaluations = 0;
+
+    public static double getZeroPointFive() {
+        return ZERO_POINT_FIVE;
+    }
 
     /**
      * Helper method.
@@ -58,14 +62,12 @@ public class Hooke implements SearchMethod {
 
         minumumValueOfFunction = previousBestValuedCoordinate;
 
-        for (iterationNumber = 0; iterationNumber < numberOfVariables; iterationNumber++) {
-            currentSearchPoint[iterationNumber] = point[iterationNumber];
-        }
+        loadCurrentSearchPoint(point, numberOfVariables, currentSearchPoint);
 
         for (iterationNumber = 0; iterationNumber < numberOfVariables; iterationNumber++) {
             currentSearchPoint[iterationNumber] = point[iterationNumber] + stepLengthsForIterations[iterationNumber];
             currentFunctionValue = objectiveFunction.findValueForArguments(currentSearchPoint);
-            numberOfFunctionEvaluations++;
+            setNumberOfFunctionEvaluations(getNumberOfFunctionEvaluations() + 1);
 
             if (currentFunctionValue < minumumValueOfFunction) {
                 minumumValueOfFunction = currentFunctionValue;
@@ -73,21 +75,31 @@ public class Hooke implements SearchMethod {
                 stepLengthsForIterations[iterationNumber] = 0.0 - stepLengthsForIterations[iterationNumber];
                 currentSearchPoint[iterationNumber] = point[iterationNumber] + stepLengthsForIterations[iterationNumber];
                 currentFunctionValue = objectiveFunction.findValueForArguments(currentSearchPoint);
-                numberOfFunctionEvaluations++;
+                setNumberOfFunctionEvaluations(getNumberOfFunctionEvaluations() + 1);
 
-                if (currentFunctionValue < minumumValueOfFunction) {
-                    minumumValueOfFunction = currentFunctionValue;
-                } else {
-                    currentSearchPoint[iterationNumber] = point[iterationNumber];
-                }
+                minumumValueOfFunction = checkIfMinimumFound(point, minumumValueOfFunction, currentSearchPoint, currentFunctionValue, iterationNumber);
             }
         }
 
-        for (iterationNumber = 0; iterationNumber < numberOfVariables; iterationNumber++) {
-            point[iterationNumber] = currentSearchPoint[iterationNumber];
-        }
+        loadCurrentSearchPoint(currentSearchPoint, numberOfVariables, point);
 
         return minumumValueOfFunction;
+    }
+
+    private double checkIfMinimumFound(double[] point, double minumumValueOfFunction, double[] currentSearchPoint, double currentFunctionValue, int iterationNumber) {
+        if (currentFunctionValue < minumumValueOfFunction) {
+            minumumValueOfFunction = currentFunctionValue;
+        } else {
+            currentSearchPoint[iterationNumber] = point[iterationNumber];
+        }
+        return minumumValueOfFunction;
+    }
+
+    private void loadCurrentSearchPoint(double[] point, int numberOfVariables, double[] currentSearchPoint) {
+        int iterationNumber;
+        for (iterationNumber = 0; iterationNumber < numberOfVariables; iterationNumber++) {
+            currentSearchPoint[iterationNumber] = point[iterationNumber];
+        }
     }
 
     public void findMinimum(ObjectiveFunction objectiveFunction) {
@@ -112,21 +124,15 @@ public class Hooke implements SearchMethod {
         double[] newFunctionArguments = new double[MAXIMUM_NUMBER_OF_VARIABLES];
         double[] stepSizeLenghts = new double[MAXIMUM_NUMBER_OF_VARIABLES];
 
-        for (int currentCoordinateNumber = 0; currentCoordinateNumber < numberOfVariables; currentCoordinateNumber++) {
-            previousFunctionArguments[currentCoordinateNumber] = startingPointCoordinates[currentCoordinateNumber];
-            newFunctionArguments[currentCoordinateNumber] = previousFunctionArguments[currentCoordinateNumber];
-
-            loadStepsizeLenghtsForAllSteps(startingPointCoordinates, rhoStepsizeGeometricShrink, stepSizeLenghts,
-                    currentCoordinateNumber);
-        }
+        loadStepsSizeLenghtsForCoordinates(numberOfVariables, startingPointCoordinates, rhoStepsizeGeometricShrink, previousFunctionArguments, newFunctionArguments, stepSizeLenghts);
 
         double previousFunctionValue = objectiveFunction.findValueForArguments(newFunctionArguments);
-        numberOfFunctionEvaluations++;
+        setNumberOfFunctionEvaluations(getNumberOfFunctionEvaluations() + 1);
 
         double newFunctionValue = previousFunctionValue;
         double stepLength = rhoStepsizeGeometricShrink;
-        while ((numberOfIterations < maximumNumberOfIterations) && (stepLength > epsilonEndingValueOfStepsize)) {
-            numberOfIterations++;
+        while ((getNumberOfIterations() < maximumNumberOfIterations) && (stepLength > epsilonEndingValueOfStepsize)) {
+            setNumberOfIterations(getNumberOfIterations() + 1);
 
             logIterationInformations(numberOfVariables, previousFunctionArguments, previousFunctionValue);
 
@@ -148,8 +154,18 @@ public class Hooke implements SearchMethod {
         }
 
         findBestNewPoint(numberOfVariables, endingPointCoordinates, previousFunctionArguments);
-        resultPointCoordinates = endingPointCoordinates;
+        setResultPointCoordinates(endingPointCoordinates);
 
+    }
+
+    private void loadStepsSizeLenghtsForCoordinates(int numberOfVariables, double[] startingPointCoordinates, double rhoStepsizeGeometricShrink, double[] previousFunctionArguments, double[] newFunctionArguments, double[] stepSizeLenghts) {
+        for (int currentCoordinateNumber = 0; currentCoordinateNumber < numberOfVariables; currentCoordinateNumber++) {
+            previousFunctionArguments[currentCoordinateNumber] = startingPointCoordinates[currentCoordinateNumber];
+            newFunctionArguments[currentCoordinateNumber] = previousFunctionArguments[currentCoordinateNumber];
+
+            loadStepsizeLenghtsForAllSteps(startingPointCoordinates, rhoStepsizeGeometricShrink, stepSizeLenghts,
+                    currentCoordinateNumber);
+        }
     }
 
     private void loadStepsizeLenghtsForAllSteps(double[] startingPointCoordinates, double rhoStepsizeGeometricShrink, double[] stepSizeLenghts, int currentCoordinateNumber) {
@@ -180,7 +196,7 @@ public class Hooke implements SearchMethod {
     private void logIterationInformations(int numberOfVariables, double[] previousFunctionArguments, double
             previousFunctionValue) {
         System.out.printf(
-                "\nAfter %5d funevals, f(x) =  %.4e at\n", numberOfFunctionEvaluations, previousFunctionValue
+                "\nAfter %5d funevals, f(x) =  %.4e at\n", getNumberOfFunctionEvaluations(), previousFunctionValue
         );
 
         for (int currentNumberOfVariable = 0; currentNumberOfVariable < numberOfVariables; currentNumberOfVariable++) {
@@ -203,6 +219,22 @@ public class Hooke implements SearchMethod {
     @Override
     public int getNumberOfIterations() {
         return numberOfIterations;
+    }
+
+    public void setNumberOfIterations(int numberOfIterations) {
+        this.numberOfIterations = numberOfIterations;
+    }
+
+    public void setResultPointCoordinates(double[] resultPointCoordinates) {
+        this.resultPointCoordinates = resultPointCoordinates;
+    }
+
+    public int getNumberOfFunctionEvaluations() {
+        return numberOfFunctionEvaluations;
+    }
+
+    public void setNumberOfFunctionEvaluations(int numberOfFunctionEvaluations) {
+        this.numberOfFunctionEvaluations = numberOfFunctionEvaluations;
     }
 
     private class NewDirectionPursuer {
@@ -237,21 +269,12 @@ public class Hooke implements SearchMethod {
         }
 
         public NewDirectionPursuer invoke() {
-            double tmp;
             while ((newFunctionValue < previousFunctionValue) && (keep == 1)) {
 
-                for (int i = 0; i < numberOfVariables; i++) {
-                    // Firstly, arrange the sign of delta[].
-                    if (newFunctionArguments[i] <= previousFunctionArguments[i]) {
-                        delta[i] = 0.0 - Math.abs(delta[i]);
-                    } else {
-                        delta[i] = Math.abs(delta[i]);
-                    }
+                for (int variableNumber = 0; variableNumber < numberOfVariables; variableNumber++) {
+                    arrangeSignOfDelta(variableNumber);
 
-                    // Now, move further in this direction.
-                    tmp = previousFunctionArguments[i];
-                    previousFunctionArguments[i] = newFunctionArguments[i];
-                    newFunctionArguments[i] = newFunctionArguments[i] + newFunctionArguments[i] - tmp;
+                    purseFurtherInCurrentDirection(variableNumber);
                 }
 
                 previousFunctionValue = newFunctionValue;
@@ -259,31 +282,31 @@ public class Hooke implements SearchMethod {
                 newFunctionValue = trialPhase(delta, newFunctionArguments, previousFunctionValue, numberOfVariables,
                         objectiveFunction);
 
-                // If the further (optimistic) move was bad....
-                if (newFunctionValue >= previousFunctionValue) {
+                if (furtherOptimisticStepFailed()) {
                     break;
                 }
 
-                /*
-                 * Make sure that the differences between the new and the old
-                 * points are due to actual displacements; beware of roundoff
-                 * errors that might cause newFunctionValue < previousFunctionValue.
-                 */
-                keep = 0;
-
-                for (int i = 0; i < numberOfVariables; i++) {
-                    keep = 1;
-
-                    if (Math.abs(newFunctionArguments[i] - previousFunctionArguments[i])
-                            > (ZERO_POINT_FIVE * Math.abs(delta[i]))) {
-
-                        break;
-                    } else {
-                        keep = 0;
-                    }
-                }
             }
             return this;
+        }
+
+        private void arrangeSignOfDelta(int i) {
+            if (newFunctionArguments[i] <= previousFunctionArguments[i]) {
+                delta[i] = 0.0 - Math.abs(delta[i]);
+            } else {
+                delta[i] = Math.abs(delta[i]);
+            }
+        }
+
+        private void purseFurtherInCurrentDirection(int i) {
+            double tmp;
+            tmp = previousFunctionArguments[i];
+            previousFunctionArguments[i] = newFunctionArguments[i];
+            newFunctionArguments[i] = newFunctionArguments[i] + newFunctionArguments[i] - tmp;
+        }
+
+        private boolean furtherOptimisticStepFailed() {
+            return newFunctionValue >= previousFunctionValue;
         }
     }
 

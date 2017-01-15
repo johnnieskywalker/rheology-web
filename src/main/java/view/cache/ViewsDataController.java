@@ -32,10 +32,10 @@ public class ViewsDataController {
     }
 
     public void reload(){
-        tableViewBean.setTableRowWrappers(prepareTableWrappers());
+        tableViewBean.setTableRowWrappers(prepareTableWrappersFromFile());
     }
 
-    public List<TableRowWrapper> prepareTableWrappers() {
+    public List<TableRowWrapper> prepareTableWrappersFromFile() {
         try {
             return FileToTableWrappersReader.readFileToTableWrappers(lastUploadedFilePath.toFile());
         } catch (FileNotFoundException e) {

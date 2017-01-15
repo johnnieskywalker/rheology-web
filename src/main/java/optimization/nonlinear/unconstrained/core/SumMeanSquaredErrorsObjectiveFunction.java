@@ -19,17 +19,17 @@ import java.util.List;
 
 public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFunction{
     /** Constant. The stepsize geometric shrink. */
-    public static final double RHO_BEGIN = 0.4;
+    public static final double STRPSIZE_GEOMETRIC_SHRINK_RHO = 0.4;
     public  static final int NUMBER_OF_POINTS = 9;
 
-    private static List<Double>  deformations = new ArrayList<>();
-    private static List<Double>  experimentalStresses = new ArrayList<>();
+    private  List<Double>  deformations = new ArrayList<>();
+    private  List<Double>  experimentalStresses = new ArrayList<>();
 
 
-    public double findValueForArguments(final double[] x) {
+    public double findValueForArguments(double[] functionArguments) {
 
-        double k = x[0];
-        double n = x[1];
+        double k = functionArguments[0];
+        double n = functionArguments[1];
 
         double sumOfMeanSquaredErrors=0.0;
 
@@ -41,27 +41,27 @@ public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFun
         return sumOfMeanSquaredErrors;
     }
 
-    public static double meanSquaredError(double experimentalDeformation,double calculatedDeformation){
-        return Math.pow(experimentalDeformation-calculatedDeformation,2);
+    public double meanSquaredError(double experimentalStress,double calculatedStress){
+        return Math.pow(experimentalStress-calculatedStress,2);
     }
 
-    public static double calculateMaterialStressInPoint(double parameterK, double parameterN, double deformationValueInIteration){
-        return parameterK*Math.pow(deformationValueInIteration,parameterN);
+    public double calculateMaterialStressInPoint(double parameterK, double parameterN, double experimentalDeformationValue){
+        return parameterK*Math.pow(experimentalDeformationValue,parameterN);
     }
 
-    public static List<Double> getDeformations() {
+    public  List<Double> getDeformations() {
         return deformations;
     }
 
-    public static List<Double> getExperimentalStresses() {
+    public  List<Double> getExperimentalStresses() {
         return experimentalStresses;
     }
 
-    public static void setDeformations(List<Double> deformations) {
-        SumMeanSquaredErrorsObjectiveFunction.deformations = deformations;
+    public  void setDeformations(List<Double> deformations) {
+        this.deformations = deformations;
     }
 
-    public static void setExperimentalStresses(List<Double> experimentalStresses) {
-        SumMeanSquaredErrorsObjectiveFunction.experimentalStresses = experimentalStresses;
+    public  void setExperimentalStresses(List<Double> experimentalStresses) {
+        this.experimentalStresses = experimentalStresses;
     }
 }
