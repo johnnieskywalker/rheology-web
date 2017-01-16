@@ -4,6 +4,7 @@ import calculations.OptimizedValuesToTableWrappersConverter;
 import dataloaders.TableWrappersToSumMeanSquaredErrorsReader;
 import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
 import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
+import utils.ConstantValues;
 import view.wrappers.TableRowWrapper;
 
 import java.util.List;
@@ -30,20 +31,14 @@ public class ApproximationFromTableWrappersTask {
         sumMeanSquaredErrorsObjectiveFunction =
         TableWrappersToSumMeanSquaredErrorsReader.read(optimizedValuesToTableWrappersConverter.getTableRowWrappers());
 
-
-        //FIXME - ŁW doprowadz to do ladu zeby sie dalo wynik wykorzystac w tabelce wykorzystac OptimizedValuesToTableWrappersConverter
-
         hookeAlgorithm.findMinimum(
                 numberOfVariables, startPoint, resultPoints, rho, epsilon, HookeAlgorithm.MAXIMUM_NUMBER_OF_ITERATIONS,
                 sumMeanSquaredErrorsObjectiveFunction);
-        int numberOfIterations = hookeAlgorithm.getNumberOfIterations();
-
-        printResults(numberOfVariables, numberOfIterations, resultPoints);
     }
 
     private void initStartPoints() {
-        startPoint[HookeAlgorithm.INDEX_ZERO] = 0.1;
-        startPoint[HookeAlgorithm.INDEX_ONE] = 0.1;
+        startPoint[HookeAlgorithm.INDEX_ZERO] = ConstantValues.STARTING_K_VALUE;
+        startPoint[HookeAlgorithm.INDEX_ONE] = ConstantValues.STARTING_N_VALUE;
     }
 
     public void setTableRowWrappers(List<TableRowWrapper> tableRowWrappers){
@@ -60,21 +55,15 @@ public class ApproximationFromTableWrappersTask {
         return optimizedValuesToTableWrappersConverter.getTableRowWrappers();
     }
 
+    public double getSumMeanSquaredErrorsValue(){
+        return optimizedValuesToTableWrappersConverter.getSumMeanSquaredErrorsValue();
+    }
+
     public double getOptimizedParameterKValue(){
         return resultPoints[0];
     }
 
     public double getOptimizedParameterNValue(){
         return resultPoints[1];
-    }
-    //FIXME - ŁW wywalic pozniej to
-    private static void printResults(int numberOfVariables, int numberOfIterations, double[] resultPoints) {
-        System.out.println(
-                "\nHOOKE USED " + numberOfIterations + " ITERATIONS, AND RETURNED"
-        );
-
-        for (int i = 0; i < numberOfVariables; i++) {
-            System.out.printf("x[%3d] = %15.7e \n", i, resultPoints[i]);
-        }
     }
 }

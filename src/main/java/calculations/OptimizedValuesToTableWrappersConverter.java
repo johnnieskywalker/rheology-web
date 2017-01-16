@@ -15,11 +15,16 @@ public class OptimizedValuesToTableWrappersConverter {
 
     private List<TableRowWrapper> tableRowWrappers;
 
-    public void fillTableWrappersWithCalculatedValues(){
+    public void fillTableWrappersWithCalculatedValues() {
         tableRowWrappers.forEach(tableRowWrapper -> {
             fillCalculatedStressInRow(tableRowWrapper);
             fillMeanSquaredErrorInRow(tableRowWrapper);
         });
+    }
+
+    private void fillCalculatedStressInRow(TableRowWrapper tableRowWrapper) {
+        tableRowWrapper.setCalculatedStress(objectiveFunction.calculateMaterialStressInPoint
+                (optimizedParameterK, optimizedParameterN, tableRowWrapper.getDeformation()));
     }
 
     private void fillMeanSquaredErrorInRow(TableRowWrapper tableRowWrapper) {
@@ -27,9 +32,12 @@ public class OptimizedValuesToTableWrappersConverter {
                 tableRowWrapper.getCalculatedStress()));
     }
 
-    private void fillCalculatedStressInRow(TableRowWrapper tableRowWrapper) {
-        tableRowWrapper.setCalculatedStress(objectiveFunction.calculateMaterialStressInPoint
-                (optimizedParameterK,optimizedParameterN,tableRowWrapper.getDeformation()));
+    public double getSumMeanSquaredErrorsValue() {
+        double sumMeanSquaredErrors = 0.0;
+        for (TableRowWrapper tableRowWrapper : tableRowWrappers) {
+            sumMeanSquaredErrors+=tableRowWrapper.getMeanSquaredError();
+        }
+        return sumMeanSquaredErrors;
     }
 
     public double getOptimizedParameterK() {

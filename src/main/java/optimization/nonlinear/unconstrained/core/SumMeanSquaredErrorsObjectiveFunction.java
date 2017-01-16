@@ -42,7 +42,7 @@ public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFun
     }
 
     public double meanSquaredError(double experimentalStress,double calculatedStress){
-        return Math.pow(experimentalStress-calculatedStress,2);
+        return Math.sqrt(Math.pow(experimentalStress-calculatedStress,2));
     }
 
     public double calculateMaterialStressInPoint(double parameterK, double parameterN, double experimentalDeformationValue){

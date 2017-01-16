@@ -53,6 +53,8 @@ public class ViewsDataController {
         runCalculationsForTableWrappers();
 
         fillTableWithResultRows();
+
+        updateParameterValuesDisplayedBelowTable();
     }
 
     private void runCalculationsForTableWrappers() {
@@ -63,6 +65,12 @@ public class ViewsDataController {
 
     private void fillTableWithResultRows() {
         tableViewBean.setTableRowWrappers(approximationFromTableWrappersTask.loadResultTableRowWrappers());
+    }
+
+    private void updateParameterValuesDisplayedBelowTable() {
+        tableViewBean.setOptimizedParameterK(approximationFromTableWrappersTask.getOptimizedParameterKValue());
+        tableViewBean.setOptimizedParameterN(approximationFromTableWrappersTask.getOptimizedParameterNValue());
+        tableViewBean.setSumMeanSquaredError(approximationFromTableWrappersTask.getSumMeanSquaredErrorsValue());
     }
 
     public Path getLastUploadedFilePath() {

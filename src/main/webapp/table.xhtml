@@ -6,6 +6,7 @@
 <h:body>
     <ui:composition template="/WEB-INF/template/commonLayout.xhtml">
         <ui:define name="content">
+
             <p:dataTable var="row" value="#{tableView.tableRowWrappers}" stickyHeader="true">
                 <p:column headerText="Odkształcenie">
                     <h:outputText value="#{row.deformation}"/>
@@ -21,6 +22,15 @@
                 </p:column>
             </p:dataTable>
 
+            <div>
+                <h:outputLabel value="Parametr K :  #{tableView.optimizedParameterK}" ></h:outputLabel>
+            </div>
+            <div>
+                <h:outputLabel value="Parametr N : #{tableView.optimizedParameterN}"></h:outputLabel>
+            </div>
+            <div>
+                <h:outputLabel value="Suma błędów średniokwadratowych : #{tableView.sumMeanSquaredError}"></h:outputLabel>
+            </div>
         </ui:define>
     </ui:composition>
 </h:body>
