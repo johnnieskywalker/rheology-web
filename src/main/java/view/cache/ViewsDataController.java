@@ -1,6 +1,7 @@
 package view.cache;
 
 import dataloaders.FileToTableWrappersReader;
+import optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask;
 import view.TableView;
 import view.wrappers.TableRowWrapper;
 
@@ -13,7 +14,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-@ManagedBean(name= "viewsDataController")
+@ManagedBean(name = "viewsDataController")
 @SessionScoped
 public class ViewsDataController {
 
@@ -23,15 +24,18 @@ public class ViewsDataController {
 
     private TableView tableViewBean;
 
+    private ApproximationFromTableWrappersTask approximationFromTableWrappersTask = new
+            ApproximationFromTableWrappersTask();
+
     @PostConstruct
-    public void init() {
+    public void initializeViewBeans() {
         facesContext = FacesContext.getCurrentInstance();
         tableViewBean
-                = (TableView)facesContext.getApplication()
+                = (TableView) facesContext.getApplication()
                 .createValueBinding("#{tableView}").getValue(facesContext);
     }
 
-    public void reload(){
+    public void reloadDataFromLastFile() {
         tableViewBean.setTableRowWrappers(prepareTableWrappersFromFile());
     }
 
@@ -43,6 +47,22 @@ public class ViewsDataController {
         }
 
         return new ArrayList<>();
+    }
+
+    public void findResultsForTableWrappers() {
+        runCalculationsForTableWrappers();
+
+        fillTableWithResultRows();
+    }
+
+    private void runCalculationsForTableWrappers() {
+        approximationFromTableWrappersTask.setTableRowWrappers(tableViewBean.getTableRowWrappers());
+
+        approximationFromTableWrappersTask.run();
+    }
+
+    private void fillTableWithResultRows() {
+        tableViewBean.setTableRowWrappers(approximationFromTableWrappersTask.loadResultTableRowWrappers());
     }
 
     public Path getLastUploadedFilePath() {

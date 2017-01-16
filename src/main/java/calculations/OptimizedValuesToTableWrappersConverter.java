@@ -15,15 +15,6 @@ public class OptimizedValuesToTableWrappersConverter {
 
     private List<TableRowWrapper> tableRowWrappers;
 
-//
-//
-//    public OptimizedValuesToTableWrappersConverter(double optimizedParameterK, double optimizedParameterN, ObjectiveFunction objectiveFunction, List<TableRowWrapper> tableRowWrappers) {
-//        this.optimizedParameterK = optimizedParameterK;
-//        this.optimizedParameterN = optimizedParameterN;
-//        this.objectiveFunction = objectiveFunction;
-//        this.tableRowWrappers = tableRowWrappers;
-//    }
-
     public void fillTableWrappersWithCalculatedValues(){
         tableRowWrappers.forEach(tableRowWrapper -> {
             fillCalculatedStressInRow(tableRowWrapper);

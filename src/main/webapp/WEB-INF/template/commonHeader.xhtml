@@ -6,55 +6,59 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-    <body>
-	    <ui:composition>
-            <p:menubar>
-                <p:submenu label="Plik" icon="ui-icon-document">
-                    <p:submenu label="Wybierz plik" icon="ui-icon-contact">
-                        <p:menuitem value="Projekt" url="#"/>
-                        <p:menuitem value="Plik" url="#"/>
-                    </p:submenu>
-                    <p:menuitem value="Otwórz" url="#"/>
-                    <p:separator/>
-                    <p:menuitem value="Zamknij" url="#"/>
+<body>
+<ui:composition>
+
+    <h:form>
+
+    <p:menubar>
+        <p:submenu label="Plik" icon="ui-icon-document">
+            <p:submenu label="Wybierz plik" icon="ui-icon-contact">
+                <p:menuitem value="Projekt" url="#"/>
+                <p:menuitem value="Plik" url="#"/>
+            </p:submenu>
+            <p:menuitem value="Otwórz" url="#"/>
+            <p:separator/>
+            <p:menuitem value="Zamknij" url="#"/>
+        </p:submenu>
+
+        <p:submenu label="Edycja" icon="ui-icon-pencil">
+            <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"/>
+            <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"/>
+        </p:submenu>
+
+        <p:submenu label="Obliczenia" icon="ui-icon-calculator">
+            <p:submenu label="Algorytm" icon="ui-icon-contact">
+                <p:menuitem value="Hooke-Jeeves" url="#"/>
+                <p:menuitem value="Inny" url="#"/>
+            </p:submenu>
+            <p:submenu label="Funkcja Materiału" icon="ui-icon-contact">
+                <p:menuitem value="k*Epsilon(i)^n" url="#"/>
+            </p:submenu>
+            <p:submenu label="Funkcja Celu" icon="ui-icon-contact">
+                <p:menuitem value="Minimalizacja sumy błędów średniokwadratowych" url="#"/>
+            </p:submenu>
+            <p:menuitem value="Uruchom" action="#{viewsDataController.findResultsForTableWrappers}" update="@all"/>
+        </p:submenu>
+        <p:submenu label="Help" icon="ui-icon-help">
+            <p:submenu label="Wyszukaj" icon="ui-icon-search">
+                <p:submenu label="Text">
+                    <p:menuitem value="Obszar roboczy" url="#"/>
                 </p:submenu>
-
-                <p:submenu label="Edycja" icon="ui-icon-pencil">
-                    <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w"/>
-                    <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e"/>
-                </p:submenu>
-
-                <p:submenu label="Obliczenia" icon="ui-icon-calculator">
-                    <p:submenu label="Algorytm" icon="ui-icon-contact">
-                        <p:menuitem value="Hooke-Jeeves" url="#"/>
-                        <p:menuitem value="Inny" url="#"/>
-                    </p:submenu>
-                    <p:submenu label="Funkcja Materiału" icon="ui-icon-contact">
-                        <p:menuitem value="k*Epsilon(i)^n" url="#"/>
-                    </p:submenu>
-                    <p:submenu label="Funkcja Celu" icon="ui-icon-contact">
-                        <p:menuitem value="Minimalizacja sumy błędów średniokwadratowych" url="#"/>
-                    </p:submenu>
-                    <p:menuitem value="Uruchom" url="#"/>
-                </p:submenu>
-
-                <p:submenu label="Help" icon="ui-icon-help">
-                    <p:submenu label="Wyszukaj" icon="ui-icon-search">
-                        <p:submenu label="Text">
-                            <p:menuitem value="Obszar roboczy" url="#"/>
-                        </p:submenu>
-                        <p:menuitem value="Pliki" url="#"/>
-                    </p:submenu>
-                </p:submenu>
+                <p:menuitem value="Pliki" url="#"/>
+            </p:submenu>
+        </p:submenu>
 
 
-                <f:facet name="options">
-                    <p:commandButton type="button" value="Logout" icon="ui-icon-extlink"
-                                     style="background-color: cornflowerblue;"/>
-                </f:facet>
-            </p:menubar>
-		<!--<h1>Rheology Web</h1>-->
- 
-	    </ui:composition>
-    </body>
+        <f:facet name="options">
+            <p:commandButton type="button" value="Logout" icon="ui-icon-extlink"
+                             style="background-color: cornflowerblue;"/>
+        </f:facet>
+    </p:menubar>
+
+    </h:form>
+    <!--<h1>Rheology Web</h1>-->
+
+</ui:composition>
+</body>
 </html>

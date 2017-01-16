@@ -80,7 +80,7 @@ public class FileUploadView {
     }
 
     private void reloadAllViews(){
-        viewsDataController.reload();
+        viewsDataController.reloadDataFromLastFile();
     }
 
     public UploadedFile getUploadedFile() {

@@ -49,6 +49,14 @@ public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFun
         return parameterK*Math.pow(experimentalDeformationValue,parameterN);
     }
 
+    public void addDeformation(Double deformation){
+        deformations.add(deformation);
+    }
+
+    public void addExperimentalStress(Double experimentalStress){
+        experimentalStresses.add(experimentalStress);
+    }
+
     public  List<Double> getDeformations() {
         return deformations;
     }
