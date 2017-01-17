@@ -26,8 +26,6 @@ public class ViewsDataController {
 
     private TableView tableViewBean;
 
-//    private ChartView chartViewBean;
-
     private ApproximationFromTableWrappersTask approximationFromTableWrappersTask = new
             ApproximationFromTableWrappersTask();
 
@@ -37,10 +35,6 @@ public class ViewsDataController {
         tableViewBean
                 = (TableView) facesContext.getApplication()
                 .createValueBinding("#{tableView}").getValue(facesContext);
-
-//        chartViewBean
-//                = (ChartView) facesContext.getApplication()
-//                .createValueBinding("#{chartView}").getValue(facesContext);
     }
 
     public void reloadDataFromLastFile() {
@@ -63,8 +57,6 @@ public class ViewsDataController {
         fillTableWithResultRows();
 
         updateParameterValuesDisplayedBelowTable();
-
-//        loadDataFromTableToChart();
     }
 
     private void runCalculationsForTableWrappers() {
@@ -88,7 +80,6 @@ public class ViewsDataController {
                 TableWrappersToLineChartModelConverter();
         tableWrappersToLineChartModelConverter.setTableRowWrappers(tableViewBean.getTableRowWrappers());
 
-//        tableWrappersToLineChartModelConverter.setLineModel(chartViewBean.getLineModel());
         return tableWrappersToLineChartModelConverter.buildLineChartModelFromTableData();
     }
 

@@ -15,23 +15,31 @@ public class TableWrappersToLineChartModelConverter {
 
     public LineChartModel buildLineChartModelFromTableData() {
 
-        LineChartSeries experimentalStressSeries = new LineChartSeries();
-        experimentalStressSeries.setLabel("Naprężenie zmierzone");
-
-        for (TableRowWrapper tableRowWrapper : tableRowWrappers) {
-            experimentalStressSeries.set(tableRowWrapper.getDeformation(),tableRowWrapper.getExperimentalStress());
-        }
-
-        LineChartSeries calculatedStressSeries = new LineChartSeries();
-        calculatedStressSeries.setLabel("Naprężenie wyliczone");
-        for (TableRowWrapper tableRowWrapper : tableRowWrappers) {
-            calculatedStressSeries.set(tableRowWrapper.getDeformation(),tableRowWrapper.getCalculatedStress());
-        }
+        LineChartSeries experimentalStressSeries = loadExperimentalStressSeries();
+        LineChartSeries calculatedStressSeries = loadCalculatedStressSeries();
 
         lineModel.addSeries(experimentalStressSeries);
         lineModel.addSeries(calculatedStressSeries);
 
         return lineModel;
+    }
+
+    private LineChartSeries loadCalculatedStressSeries() {
+        LineChartSeries calculatedStressSeries = new LineChartSeries();
+        calculatedStressSeries.setLabel("Naprężenie wyliczone");
+        for (TableRowWrapper tableRowWrapper : tableRowWrappers) {
+            calculatedStressSeries.set(tableRowWrapper.getDeformation(),tableRowWrapper.getCalculatedStress());
+        }
+        return calculatedStressSeries;
+    }
+
+    private LineChartSeries loadExperimentalStressSeries() {
+        LineChartSeries experimentalStressSeries = new LineChartSeries();
+        experimentalStressSeries.setLabel("Naprężenie zmierzone");
+        for (TableRowWrapper tableRowWrapper : tableRowWrappers) {
+            experimentalStressSeries.set(tableRowWrapper.getDeformation(),tableRowWrapper.getExperimentalStress());
+        }
+        return experimentalStressSeries;
     }
 
     public void setTableRowWrappers(List<TableRowWrapper> tableRowWrappers) {

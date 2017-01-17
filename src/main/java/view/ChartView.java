@@ -37,7 +37,7 @@ public class ChartView implements Serializable {
         lineModel.setLegendPosition("e");
         Axis yAxis = lineModel.getAxis(AxisType.Y);
         yAxis.setMin(0);
-        yAxis.setMax(200);
+        yAxis.setMax(140);
         yAxis.setLabel("Naprężenie (ε)");
 
         Axis xAxis = lineModel.getAxis(AxisType.X);
@@ -47,30 +47,6 @@ public class ChartView implements Serializable {
     private LineChartModel initLinearModel() {
 
         return viewsDataController.loadDataFromTableToChart();
-//        LineChartModel model = new LineChartModel();
-
-//        LineChartSeries experimentalStressSeries = new LineChartSeries();
-//        experimentalStressSeries.setLabel("Naprężenie zmierzone");
-
-//        experimentalStressSeries.set(1, 2);
-//        experimentalStressSeries.set(2, 1);
-//        experimentalStressSeries.set(3, 3);
-//        experimentalStressSeries.set(4, 6);
-//        experimentalStressSeries.set(5, 8);
-
-//        LineChartSeries calculatedStressSeries = new LineChartSeries();
-//        calculatedStressSeries.setLabel("Naprężenie wyliczone");
-
-//        calculatedStressSeries.set(1, 6);
-//        calculatedStressSeries.set(2, 3);
-//        calculatedStressSeries.set(3, 2);
-//        calculatedStressSeries.set(4, 7);
-//        calculatedStressSeries.set(5, 9);
-
-//        model.addSeries(experimentalStressSeries);
-//        model.addSeries(calculatedStressSeries);
-//
-//        return model;
     }
 
     public void setLineModel(LineChartModel lineModel) {
