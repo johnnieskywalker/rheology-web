@@ -7,12 +7,10 @@ import view.cache.ViewsDataController;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
 
 @ManagedBean
-@SessionScoped
 public class ChartView implements Serializable {
 
     private LineChartModel lineModel;
@@ -32,19 +30,21 @@ public class ChartView implements Serializable {
     }
 
     private void createLineModels() {
-        lineModel = initLinearModel();
+        lineModel = loadDataFromTableToChart();
         lineModel.setTitle("ε(σ)");
         lineModel.setLegendPosition("e");
+        createAxes();
+    }
+
+    private void createAxes() {
         Axis yAxis = lineModel.getAxis(AxisType.Y);
-        yAxis.setMin(0);
-        yAxis.setMax(140);
         yAxis.setLabel("Naprężenie (ε)");
 
         Axis xAxis = lineModel.getAxis(AxisType.X);
         xAxis.setLabel("Odkształcenie (σ)");
     }
 
-    private LineChartModel initLinearModel() {
+    public LineChartModel loadDataFromTableToChart() {
 
         return viewsDataController.loadDataFromTableToChart();
     }
