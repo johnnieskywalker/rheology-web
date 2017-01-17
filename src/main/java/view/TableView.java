@@ -5,13 +5,14 @@ import view.wrappers.TableRowWrapper;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.ArrayList;
 import java.util.List;
 
 @ManagedBean(name = "tableView")
 @SessionScoped
 public class TableView {
 
-    private List<TableRowWrapper> tableRowWrappers;
+    private List<TableRowWrapper> tableRowWrappers = new ArrayList<>();
 
     private Double optimizedParameterK = ConstantValues.STARTING_K_VALUE;
 

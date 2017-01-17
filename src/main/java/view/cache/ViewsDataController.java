@@ -1,7 +1,9 @@
 package view.cache;
 
+import calculations.TableWrappersToLineChartModelConverter;
 import dataloaders.FileToTableWrappersReader;
 import optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask;
+import org.primefaces.model.chart.LineChartModel;
 import view.TableView;
 import view.wrappers.TableRowWrapper;
 
@@ -24,6 +26,8 @@ public class ViewsDataController {
 
     private TableView tableViewBean;
 
+//    private ChartView chartViewBean;
+
     private ApproximationFromTableWrappersTask approximationFromTableWrappersTask = new
             ApproximationFromTableWrappersTask();
 
@@ -33,6 +37,10 @@ public class ViewsDataController {
         tableViewBean
                 = (TableView) facesContext.getApplication()
                 .createValueBinding("#{tableView}").getValue(facesContext);
+
+//        chartViewBean
+//                = (ChartView) facesContext.getApplication()
+//                .createValueBinding("#{chartView}").getValue(facesContext);
     }
 
     public void reloadDataFromLastFile() {
@@ -49,12 +57,14 @@ public class ViewsDataController {
         return new ArrayList<>();
     }
 
-    public void findResultsForTableWrappers() {
+    public void loadResultsToViews() {
         runCalculationsForTableWrappers();
 
         fillTableWithResultRows();
 
         updateParameterValuesDisplayedBelowTable();
+
+//        loadDataFromTableToChart();
     }
 
     private void runCalculationsForTableWrappers() {
@@ -71,6 +81,15 @@ public class ViewsDataController {
         tableViewBean.setOptimizedParameterK(approximationFromTableWrappersTask.getOptimizedParameterKValue());
         tableViewBean.setOptimizedParameterN(approximationFromTableWrappersTask.getOptimizedParameterNValue());
         tableViewBean.setSumMeanSquaredError(approximationFromTableWrappersTask.getSumMeanSquaredErrorsValue());
+    }
+
+    public LineChartModel loadDataFromTableToChart() {
+        TableWrappersToLineChartModelConverter tableWrappersToLineChartModelConverter = new
+                TableWrappersToLineChartModelConverter();
+        tableWrappersToLineChartModelConverter.setTableRowWrappers(tableViewBean.getTableRowWrappers());
+
+//        tableWrappersToLineChartModelConverter.setLineModel(chartViewBean.getLineModel());
+        return tableWrappersToLineChartModelConverter.buildLineChartModelFromTableData();
     }
 
     public Path getLastUploadedFilePath() {

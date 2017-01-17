@@ -1,0 +1,15 @@
+<html xmlns:p="http://primefaces.org/ui" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+
+</h:head>
+<h:body>
+    <ui:composition template="/WEB-INF/template/commonLayout.xhtml">
+        <ui:define name="content">
+                <p:chart type="line" model="#{chartView.lineModel}"
+                         style="height:500px; max-width: 1100px; display: block; margin-left: auto; margin-right: auto;"/>
+
+        </ui:define>
+    </ui:composition>
+</h:body>
+</html>
