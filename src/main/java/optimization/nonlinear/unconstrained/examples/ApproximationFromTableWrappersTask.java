@@ -4,6 +4,7 @@ import calculations.OptimizedValuesToTableWrappersConverter;
 import dataloaders.TableWrappersToSumMeanSquaredErrorsReader;
 import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
 import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
+import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
 import utils.ConstantValues;
 import view.wrappers.TableRowWrapper;
 
@@ -15,7 +16,7 @@ public class ApproximationFromTableWrappersTask {
 
     private HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
 
-    private SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction;
+    private SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
 
     private int numberOfVariables = 2;
     private double rho = SumMeanSquaredErrorsObjectiveFunction.STRPSIZE_GEOMETRIC_SHRINK_RHO;
@@ -53,6 +54,10 @@ public class ApproximationFromTableWrappersTask {
 
         optimizedValuesToTableWrappersConverter.fillTableWrappersWithCalculatedValues();
         return optimizedValuesToTableWrappersConverter.getTableRowWrappers();
+    }
+
+    public void setMaterialFunction(MaterialFunction materialFunction){
+        sumMeanSquaredErrorsObjectiveFunction.setMaterialFunction(materialFunction);
     }
 
     public double getSumMeanSquaredErrorsValue(){

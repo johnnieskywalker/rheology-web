@@ -2,6 +2,7 @@ package view.cache;
 
 import calculations.TableWrappersToLineChartModelConverter;
 import dataloaders.FileToTableWrappersReader;
+import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask;
 import org.primefaces.model.chart.LineChartModel;
 import view.TableView;
@@ -81,6 +82,10 @@ public class ViewsDataController {
         tableWrappersToLineChartModelConverter.setTableRowWrappers(tableViewBean.getTableRowWrappers());
 
         return tableWrappersToLineChartModelConverter.buildLineChartModelFromTableData();
+    }
+
+    public void simpleMaterialFunction(){
+        approximationFromTableWrappersTask.setMaterialFunction(new SimpleMaterialFunction());
     }
 
     public Path getLastUploadedFilePath() {

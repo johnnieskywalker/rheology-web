@@ -14,62 +14,73 @@
 
 package optimization.nonlinear.unconstrained.core;
 
+import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
+import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFunction{
-    /** Constant. The stepsize geometric shrink. */
+public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFunction {
     public static final double STRPSIZE_GEOMETRIC_SHRINK_RHO = 0.4;
-    public  static final int NUMBER_OF_POINTS = 9;
+    public static final int NUMBER_OF_POINTS = 9;
 
-    private  List<Double>  deformations = new ArrayList<>();
-    private  List<Double>  experimentalStresses = new ArrayList<>();
+    private List<Double> deformations = new ArrayList<>();
+    private List<Double> experimentalStresses = new ArrayList<>();
 
+    private MaterialFunction materialFunction = new SimpleMaterialFunction();
 
     public double findValueForArguments(double[] functionArguments) {
 
         double k = functionArguments[0];
         double n = functionArguments[1];
 
-        double sumOfMeanSquaredErrors=0.0;
+        double sumOfMeanSquaredErrors = 0.0;
 
-        for (int index = 0 ; index<deformations.size();index++){
-            double currentCalculatedStress = calculateMaterialStressInPoint(k,n,deformations.get(index));
-            sumOfMeanSquaredErrors+=meanSquaredError(experimentalStresses.get(index),currentCalculatedStress);
+        for (int index = 0; index < deformations.size(); index++) {
+            double currentCalculatedStress = calculateMaterialStressInPoint(k, n, deformations.get(index));
+            sumOfMeanSquaredErrors += meanSquaredError(experimentalStresses.get(index), currentCalculatedStress);
         }
 
         return sumOfMeanSquaredErrors;
     }
 
-    public double meanSquaredError(double experimentalStress,double calculatedStress){
-        return Math.sqrt(Math.pow(experimentalStress-calculatedStress,2));
+    public double meanSquaredError(double experimentalStress, double calculatedStress) {
+        return Math.sqrt(Math.pow(experimentalStress - calculatedStress, 2));
     }
 
-    public double calculateMaterialStressInPoint(double parameterK, double parameterN, double experimentalDeformationValue){
-        return parameterK*Math.pow(experimentalDeformationValue,parameterN);
+    public double calculateMaterialStressInPoint(double parameterK, double parameterN, double experimentalDeformationValue) {
+        return materialFunction.calculateMaterialStressInPoint(parameterK,parameterN,experimentalDeformationValue);
     }
 
-    public void addDeformation(Double deformation){
+    public void addDeformation(Double deformation) {
         deformations.add(deformation);
     }
 
-    public void addExperimentalStress(Double experimentalStress){
+    public void addExperimentalStress(Double experimentalStress) {
         experimentalStresses.add(experimentalStress);
     }
 
-    public  List<Double> getDeformations() {
+    public List<Double> getDeformations() {
         return deformations;
     }
 
-    public  List<Double> getExperimentalStresses() {
+    public List<Double> getExperimentalStresses() {
         return experimentalStresses;
     }
 
-    public  void setDeformations(List<Double> deformations) {
+    public void setDeformations(List<Double> deformations) {
         this.deformations = deformations;
     }
 
-    public  void setExperimentalStresses(List<Double> experimentalStresses) {
+    public void setExperimentalStresses(List<Double> experimentalStresses) {
         this.experimentalStresses = experimentalStresses;
+    }
+
+    public MaterialFunction getMaterialFunction() {
+        return materialFunction;
+    }
+
+    public void setMaterialFunction(MaterialFunction materialFunction) {
+        this.materialFunction = materialFunction;
     }
 }

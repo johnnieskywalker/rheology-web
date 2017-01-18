@@ -33,10 +33,7 @@
                 <p:menuitem value="Inny" url="#"/>
             </p:submenu>
             <p:submenu label="Funkcja Materiału" icon="ui-icon-contact">
-                <p:menuitem value="k*Epsilon(i)^n" url="#"/>
-            </p:submenu>
-            <p:submenu label="Funkcja Celu" icon="ui-icon-contact">
-                <p:menuitem value="Minimalizacja sumy błędów średniokwadratowych" url="#"/>
+                <p:menuitem value="σ=k*ε(i)^n" action="#{viewsDataController.simpleMaterialFunction}"/>
             </p:submenu>
             <p:menuitem value="Uruchom" action="#{viewsDataController.loadResultsToViews}" update="@all"/>
         </p:submenu>
