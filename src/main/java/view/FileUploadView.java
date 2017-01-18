@@ -35,7 +35,6 @@ public class FileUploadView {
     }
 
     public void fileUploadListener(FileUploadEvent event) {
-        //TODO - ŁW obsluzyc array out of bound zeby dalo sie wrzucic wiecej plikow
         uploadedFile = event.getFile();
         System.out.println("Uploaded File Name Is :: " + uploadedFile.getFileName() + " :: Uploaded File Size :: " + uploadedFile.getSize());
         if (uploadedFile != null) {
