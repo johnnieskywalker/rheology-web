@@ -49,7 +49,10 @@ public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFun
     }
 
     public double calculateMaterialStressInPoint(double parameterK, double parameterN, double experimentalDeformationValue) {
-        return materialFunction.calculateMaterialStressInPoint(parameterK,parameterN,experimentalDeformationValue);
+        ArrayList<Double> parameters = new ArrayList<>();
+        parameters.add(parameterK);
+        parameters.add(parameterN);
+        return materialFunction.calculateMaterialStressInPoint(parameters,experimentalDeformationValue);
     }
 
     public void addDeformation(Double deformation) {

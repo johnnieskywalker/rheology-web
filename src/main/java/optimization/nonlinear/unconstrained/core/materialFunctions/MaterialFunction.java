@@ -1,7 +1,9 @@
 package optimization.nonlinear.unconstrained.core.materialFunctions;
 
+import java.util.List;
+
 public interface MaterialFunction {
 
-    public double calculateMaterialStressInPoint(double parameterK, double parameterN, double
+    double calculateMaterialStressInPoint(List<Double> optimizedParameters, double
             experimentalDeformationValue);
 }
