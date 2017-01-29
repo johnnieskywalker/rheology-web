@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>view.FileUploadView</OriginalElement>
+  <nodes>
+    <node x="141.90625" y="79.0">view.cache.ViewsDataController</node>
+    <node x="436.60624999999993" y="79.0">org.primefaces.model.UploadedFile</node>
+    <node x="204.0" y="0.0">javax.faces.context.FacesContext</node>
+    <node x="234.4375" y="158.0">view.FileUploadView</node>
+    <node x="0.0" y="0.0">javax.faces.bean.ManagedBean</node>
+    <node x="453.85625" y="158.0">org.primefaces.event.FileUploadEvent</node>
+    <node x="128.0" y="0.0">java.nio.file.Path</node>
+    <node x="326.0" y="0.0">javax.faces.bean.SessionScoped</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="org.primefaces.event.FileUploadEvent" target="org.primefaces.model.UploadedFile">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="view.cache.ViewsDataController" target="javax.faces.bean.ManagedBean">
+      <point x="-52.125" y="-14.5" />
+      <point x="159.28125" y="59.0" />
+      <point x="81.0" y="59.0" />
+      <point x="27.0" y="14.5" />
+    </edge>
+    <edge source="view.cache.ViewsDataController" target="java.nio.file.Path">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="view.FileUploadView" target="javax.faces.bean.ManagedBean">
+      <point x="-42.375" y="-14.5" />
+      <point x="248.5625" y="138.0" />
+      <point x="27.0" y="138.0" />
+      <point x="-27.0" y="14.5" />
+    </edge>
+    <edge source="view.FileUploadView" target="org.primefaces.model.UploadedFile">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="view.cache.ViewsDataController" target="javax.faces.bean.SessionScoped">
+      <point x="52.125" y="-14.5" />
+      <point x="263.53125" y="59.0" />
+      <point x="353.5" y="59.0" />
+      <point x="-27.5" y="14.5" />
+    </edge>
+    <edge source="view.FileUploadView" target="view.cache.ViewsDataController">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="view.FileUploadView" target="javax.faces.bean.SessionScoped">
+      <point x="14.125" y="-14.5" />
+      <point x="305.0625" y="128.0" />
+      <point x="408.5" y="128.0" />
+      <point x="27.500000000000014" y="14.5" />
+    </edge>
+    <edge source="view.cache.ViewsDataController" target="javax.faces.context.FacesContext">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="285.5" y="93.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

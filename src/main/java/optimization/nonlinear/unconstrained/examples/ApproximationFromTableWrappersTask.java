@@ -3,6 +3,7 @@ package optimization.nonlinear.unconstrained.examples;
 import calculations.OptimizedValuesToTableWrappersConverter;
 import dataloaders.TableWrappersToSumMeanSquaredErrorsReader;
 import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
+import optimization.nonlinear.unconstrained.core.SearchMethod;
 import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
 import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
 import utils.ConstantValues;
@@ -14,7 +15,7 @@ public class ApproximationFromTableWrappersTask {
 
     private OptimizedValuesToTableWrappersConverter optimizedValuesToTableWrappersConverter = new OptimizedValuesToTableWrappersConverter();
 
-    private HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
+    private SearchMethod searchMethod = new HookeAlgorithm();
 
     private SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
 
@@ -31,6 +32,8 @@ public class ApproximationFromTableWrappersTask {
 
         sumMeanSquaredErrorsObjectiveFunction =
         TableWrappersToSumMeanSquaredErrorsReader.read(optimizedValuesToTableWrappersConverter.getTableRowWrappers());
+
+        HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
 
         hookeAlgorithm.findMinimum(
                 numberOfVariables, startPoint, resultPoints, rho, epsilon, HookeAlgorithm.MAXIMUM_NUMBER_OF_ITERATIONS,

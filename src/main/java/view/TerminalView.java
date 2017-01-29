@@ -18,6 +18,8 @@ public class TerminalView {
 
     String commandList = "";
 
+    ViewsDataController viewsDataController;
+
     public String handleCommand(String command, String[] params) {
         if (command.equals(TerminalCommands.GREET.toString())) {
             return handleGreet(params);
@@ -34,7 +36,7 @@ public class TerminalView {
         }
         else if(command.equals(TerminalCommands.LAST_FILE.toString())){
             FacesContext facesContext = FacesContext.getCurrentInstance();
-            ViewsDataController viewsDataController
+            viewsDataController
                     = (ViewsDataController)facesContext.getApplication()
                     .createValueBinding("#{viewsDataController}").getValue(facesContext);
             System.out.println(viewsDataController.getLastUploadedFilePath().getFileName());
