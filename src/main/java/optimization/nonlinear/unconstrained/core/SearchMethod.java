@@ -25,4 +25,6 @@ public interface SearchMethod {
      */
     public int getNumberOfIterations();
 
+    public void setStartingPoints(double[] startingPoints);
+
 }

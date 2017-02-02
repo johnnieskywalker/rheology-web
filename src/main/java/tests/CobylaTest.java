@@ -277,10 +277,13 @@ public class CobylaTest {
                 return approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().findValueForArguments(x);
             }
         };
+
         double startingK = 140.0;
         double startingN = 10.0;
         double[] x = {startingK, startingN };
-        CobylaExitStatus result = Cobyla.findMinimum(calcfc, 2, 0, x, 0.3, 0.5, iprint, 500);
+        int maxNumberOfIterations=50;
+
+        CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.3, 0.5, iprint, maxNumberOfIterations);
 
         double expectedDelta = 500.0 ;//588.298177
         assertArrayEquals(null, new double[] { -1.0, 1.0 }, x,expectedDelta );

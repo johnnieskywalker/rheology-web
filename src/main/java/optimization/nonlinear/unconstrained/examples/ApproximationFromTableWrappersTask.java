@@ -6,7 +6,6 @@ import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
 import optimization.nonlinear.unconstrained.core.SearchMethod;
 import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
 import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
-import utils.ConstantValues;
 import view.wrappers.TableRowWrapper;
 
 import java.util.List;
@@ -23,27 +22,37 @@ public class ApproximationFromTableWrappersTask {
     private double rho = SumMeanSquaredErrorsObjectiveFunction.STRPSIZE_GEOMETRIC_SHRINK_RHO;
     private double epsilon = HookeAlgorithm.ENDING_VALUE_OF_STEPSIZE;
     private double[] resultPoints = new double[HookeAlgorithm.MAXIMUM_NUMBER_OF_VARIABLES];
-    private double[] startPoint = new double[HookeAlgorithm.MAXIMUM_NUMBER_OF_VARIABLES];
+    private double[] startPoint;
 
 
     public void run() {
 
-        initStartPoints();
 
         sumMeanSquaredErrorsObjectiveFunction =
         TableWrappersToSumMeanSquaredErrorsReader.read(optimizedValuesToTableWrappersConverter.getTableRowWrappers());
 
-        HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
+        if(searchMethod instanceof HookeAlgorithm) {
+            runHookeJeeves();
+        }
+        else {
+            searchMethod.setStartingPoints(startPoint);
+            searchMethod.findMinimum(sumMeanSquaredErrorsObjectiveFunction);
+            resultPoints = searchMethod.getResultPointCoordinates();
+        }
+    }
 
+    private void runHookeJeeves() {
+//        initHookeStartPoints();
+        HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
         hookeAlgorithm.findMinimum(
                 numberOfVariables, startPoint, resultPoints, rho, epsilon, HookeAlgorithm.MAXIMUM_NUMBER_OF_ITERATIONS,
                 sumMeanSquaredErrorsObjectiveFunction);
     }
 
-    private void initStartPoints() {
-        startPoint[HookeAlgorithm.INDEX_ZERO] = ConstantValues.STARTING_K_VALUE;
-        startPoint[HookeAlgorithm.INDEX_ONE] = ConstantValues.STARTING_N_VALUE;
-    }
+//    private void initHookeStartPoints() {
+//        startPoint[HookeAlgorithm.INDEX_ZERO] = ConstantValues.STARTING_K_VALUE;
+//        startPoint[HookeAlgorithm.INDEX_ONE] = ConstantValues.STARTING_N_VALUE;
+//    }
 
     public void setTableRowWrappers(List<TableRowWrapper> tableRowWrappers){
         optimizedValuesToTableWrappersConverter.setTableRowWrappers(tableRowWrappers);
@@ -73,5 +82,21 @@ public class ApproximationFromTableWrappersTask {
 
     public double getOptimizedParameterNValue(){
         return resultPoints[1];
+    }
+
+    public SearchMethod getSearchMethod() {
+        return searchMethod;
+    }
+
+    public void setSearchMethod(SearchMethod searchMethod) {
+        this.searchMethod = searchMethod;
+    }
+
+    public double[] getStartPoint() {
+        return startPoint;
+    }
+
+    public void setStartPoint(double[] startPoint) {
+        this.startPoint = startPoint;
     }
 }

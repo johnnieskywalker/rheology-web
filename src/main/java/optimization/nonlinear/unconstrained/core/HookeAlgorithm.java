@@ -196,11 +196,11 @@ public class HookeAlgorithm implements SearchMethod {
     private void logIterationInformations(int numberOfVariables, double[] previousFunctionArguments, double
             previousFunctionValue) {
         System.out.printf(
-                "\nAfter %5d funevals, f(x) =  %.4e at\n", getNumberOfFunctionEvaluations(), previousFunctionValue
+                "\nAfter %5d funevals, f(startingPoints) =  %.4e at\n", getNumberOfFunctionEvaluations(), previousFunctionValue
         );
 
         for (int currentNumberOfVariable = 0; currentNumberOfVariable < numberOfVariables; currentNumberOfVariable++) {
-            System.out.printf("   x[%2d] = %.4e\n", currentNumberOfVariable,
+            System.out.printf("   startingPoints[%2d] = %.4e\n", currentNumberOfVariable,
                     previousFunctionArguments[currentNumberOfVariable]);
         }
     }
@@ -310,4 +310,9 @@ public class HookeAlgorithm implements SearchMethod {
         }
     }
 
+    @Override
+    public void setStartingPoints(double[] startingPoints) {
+
+    //TODO - ŁW przydałoby się to zrobić
+    }
 }

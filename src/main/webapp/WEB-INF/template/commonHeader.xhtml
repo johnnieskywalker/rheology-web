@@ -29,7 +29,8 @@
 
             <p:submenu label="Obliczenia" icon="ui-icon-calculator">
                 <p:submenu label="Algorytm" icon="ui-icon-contact">
-                    <p:menuitem value="Hooke-Jeeves" url="#"/>
+                    <p:menuitem value="Hooke-Jeeves" action="#{viewsDataController.setHookeJeevesAlgorithm}"/>
+                    <p:menuitem value="Powell" action="#{viewsDataController.setPowellAlgorithm}"/>
                     <p:menuitem value="Inny" url="#"/>
                 </p:submenu>
                 <p:submenu label="Funkcja Materiału" icon="ui-icon-contact">

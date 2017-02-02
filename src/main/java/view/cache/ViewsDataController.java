@@ -2,9 +2,12 @@ package view.cache;
 
 import calculations.TableWrappersToLineChartModelConverter;
 import dataloaders.FileToTableWrappersReader;
+import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
+import optimization.nonlinear.unconstrained.core.PowellAlgorithm;
 import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask;
 import org.primefaces.model.chart.LineChartModel;
+import utils.ConstantValues;
 import view.TableView;
 import view.wrappers.TableRowWrapper;
 
@@ -86,6 +89,19 @@ public class ViewsDataController {
 
     public void simpleMaterialFunction(){
         approximationFromTableWrappersTask.setMaterialFunction(new SimpleMaterialFunction());
+    }
+
+    public void setHookeJeevesAlgorithm(){
+        double[] startPoint= {ConstantValues.STARTING_K_VALUE,ConstantValues.STARTING_N_VALUE};
+        approximationFromTableWrappersTask.setSearchMethod(new HookeAlgorithm());
+    }
+
+    public void setPowellAlgorithm(){
+        double startingK = 140.0;
+        double startingN = 10.0;
+        double[] startPoint= {startingK,startingN};
+        approximationFromTableWrappersTask.setStartPoint(startPoint);
+        approximationFromTableWrappersTask.setSearchMethod(new PowellAlgorithm());
     }
 
     public Path getLastUploadedFilePath() {
