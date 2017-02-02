@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask</OriginalElement>
+  <nodes>
+    <node x="302.5" y="237.0">view.cache.ViewsDataController</node>
+    <node x="486.5" y="0.0">view.wrappers.TableRowWrapper</node>
+    <node x="276.0" y="79.0">optimization.nonlinear.unconstrained.core.HookeAlgorithm</node>
+    <node x="418.0" y="79.0">calculations.OptimizedValuesToTableWrappersConverter</node>
+    <node x="251.0" y="158.0">optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask</node>
+    <node x="0.0" y="79.0">optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction</node>
+    <node x="317.5" y="0.0">optimization.nonlinear.unconstrained.core.SearchMethod</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="view.cache.ViewsDataController" target="optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask" target="optimization.nonlinear.unconstrained.core.HookeAlgorithm">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="optimization.nonlinear.unconstrained.core.HookeAlgorithm" target="optimization.nonlinear.unconstrained.core.SearchMethod">
+      <point x="0.0" y="-14.5" />
+      <point x="336.5" y="54.0" />
+      <point x="344.75" y="54.0" />
+      <point x="-27.25" y="14.5" />
+    </edge>
+    <edge source="optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask" target="optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="calculations.OptimizedValuesToTableWrappersConverter" target="view.wrappers.TableRowWrapper">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask" target="calculations.OptimizedValuesToTableWrappersConverter">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask" target="optimization.nonlinear.unconstrained.core.SearchMethod">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="342.0" y="133.0" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
