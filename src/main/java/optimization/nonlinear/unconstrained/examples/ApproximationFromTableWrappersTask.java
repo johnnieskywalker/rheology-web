@@ -6,6 +6,7 @@ import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
 import optimization.nonlinear.unconstrained.core.SearchMethod;
 import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
 import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
+import utils.ConstantValues;
 import view.wrappers.TableRowWrapper;
 
 import java.util.List;
@@ -42,17 +43,22 @@ public class ApproximationFromTableWrappersTask {
     }
 
     private void runHookeJeeves() {
-//        initHookeStartPoints();
+        initHookeStartPoints();
         HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
         hookeAlgorithm.findMinimum(
                 numberOfVariables, startPoint, resultPoints, rho, epsilon, HookeAlgorithm.MAXIMUM_NUMBER_OF_ITERATIONS,
                 sumMeanSquaredErrorsObjectiveFunction);
     }
 
-//    private void initHookeStartPoints() {
-//        startPoint[HookeAlgorithm.INDEX_ZERO] = ConstantValues.STARTING_K_VALUE;
-//        startPoint[HookeAlgorithm.INDEX_ONE] = ConstantValues.STARTING_N_VALUE;
-//    }
+    private void initHookeStartPoints() {
+
+        if (startPoint==null){
+            startPoint=new double[2];
+        }
+
+        startPoint[HookeAlgorithm.INDEX_ZERO] = ConstantValues.STARTING_K_VALUE;
+        startPoint[HookeAlgorithm.INDEX_ONE] = ConstantValues.STARTING_N_VALUE;
+    }
 
     public void setTableRowWrappers(List<TableRowWrapper> tableRowWrappers){
         optimizedValuesToTableWrappersConverter.setTableRowWrappers(tableRowWrappers);

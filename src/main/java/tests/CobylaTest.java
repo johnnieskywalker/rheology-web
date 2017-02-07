@@ -34,7 +34,6 @@ import static org.junit.Assert.assertArrayEquals;
  */
 
 
-
 /**
  * Test class for COBYLA2 employing tests from Report DAMTP 1992/NA5.
  *
@@ -63,9 +62,9 @@ public class CobylaTest {
                 return 10.0 * Math.pow(x[0] + 1.0, 2.0) + Math.pow(x[1], 2.0);
             }
         };
-        double[] x = {1.0, 1.0 };
+        double[] x = {1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 2, 0, x, rhobeg, rhoend, iprint, maxfun);
-        assertArrayEquals(null, new double[] { -1.0, 0.0 }, x, 1.0e-5);
+        assertArrayEquals(null, new double[]{-1.0, 0.0}, x, 1.0e-5);
     }
 
     /**
@@ -81,9 +80,9 @@ public class CobylaTest {
                 return x[0] * x[1];
             }
         };
-        double[] x = {1.0, 1.0 };
+        double[] x = {1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 2, 1, x, rhobeg, rhoend, iprint, maxfun);
-        assertArrayEquals(null, new double[] { Math.sqrt(0.5), -Math.sqrt(0.5) }, x, 1.0e-5);
+        assertArrayEquals(null, new double[]{Math.sqrt(0.5), -Math.sqrt(0.5)}, x, 1.0e-5);
     }
 
     /**
@@ -99,9 +98,9 @@ public class CobylaTest {
                 return x[0] * x[1] * x[2];
             }
         };
-        double[] x = {1.0, 1.0, 1.0 };
+        double[] x = {1.0, 1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 3, 1, x, rhobeg, rhoend, iprint, maxfun);
-        assertArrayEquals(null, new double[] { 1.0 / Math.sqrt(3.0), 1.0 / Math.sqrt(6.0), -1.0 / 3.0 }, x, 1.0e-5);
+        assertArrayEquals(null, new double[]{1.0 / Math.sqrt(3.0), 1.0 / Math.sqrt(6.0), -1.0 / 3.0}, x, 1.0e-5);
     }
 
     /**
@@ -116,9 +115,9 @@ public class CobylaTest {
                 return Math.pow(x[0] * x[0] - x[1], 2.0) + Math.pow(1.0 + x[0], 2.0);
             }
         };
-        double[] x = {1.0, 1.0 };
+        double[] x = {1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 2, 0, x, rhobeg, rhoend, iprint, maxfun);
-        assertArrayEquals(null, new double[] { -1.0, 1.0 }, x, 1.0e-4);
+        assertArrayEquals(null, new double[]{-1.0, 1.0}, x, 1.0e-4);
     }
 
     /**
@@ -133,9 +132,9 @@ public class CobylaTest {
                 return 10.0 * Math.pow(x[0] * x[0] - x[1], 2.0) + Math.pow(1.0 + x[0], 2.0);
             }
         };
-        double[] x = {1.0, 1.0 };
+        double[] x = {1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 2, 0, x, rhobeg, rhoend, iprint, maxfun);
-        assertArrayEquals(null, new double[] { -1.0, 1.0 }, x, 3.0e-4);
+        assertArrayEquals(null, new double[]{-1.0, 1.0}, x, 3.0e-4);
     }
 
     /**
@@ -153,9 +152,9 @@ public class CobylaTest {
                 return -x[0] - x[1];
             }
         };
-        double[] x = {1.0, 1.0 };
+        double[] x = {1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 2, 2, x, rhobeg, rhoend, iprint, maxfun);
-        assertArrayEquals(null, new double[] { Math.sqrt(0.5), Math.sqrt(0.5) }, x, 1.0e-5);
+        assertArrayEquals(null, new double[]{Math.sqrt(0.5), Math.sqrt(0.5)}, x, 1.0e-5);
     }
 
     /**
@@ -174,9 +173,9 @@ public class CobylaTest {
                 return x[2];
             }
         };
-        double[] x = {1.0, 1.0, 1.0 };
+        double[] x = {1.0, 1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 3, 3, x, rhobeg, rhoend, iprint, maxfun);
-        assertArrayEquals(null, new double[] { 0.0, -3.0, -3.0 }, x, 1.0e-5);
+        assertArrayEquals(null, new double[]{0.0, -3.0, -3.0}, x, 1.0e-5);
     }
 
     /**
@@ -197,9 +196,9 @@ public class CobylaTest {
                         5.0 * x[1] - 21.0 * x[2] + 7.0 * x[3];
             }
         };
-        double[] x = {1.0, 1.0, 1.0, 1.0 };
+        double[] x = {1.0, 1.0, 1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 4, 3, x, rhobeg, rhoend, iprint, maxfun);
-        assertArrayEquals(null, new double[] { 0.0, 1.0, 2.0, -1.0 }, x, 1.0e-5);
+        assertArrayEquals(null, new double[]{0.0, 1.0, 2.0, -1.0}, x, 1.0e-5);
     }
 
     /**
@@ -222,10 +221,10 @@ public class CobylaTest {
                         4.0 * x[5] * x[6] - 10.0 * x[5] - 8.0 * x[6];
             }
         };
-        double[] x = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+        double[] x = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 7, 4, x, rhobeg, rhoend, iprint, maxfun);
         assertArrayEquals(null,
-                new double[] { 2.330499, 1.951372, -0.4775414, 4.365726, -0.624487, 1.038131, 1.594227 }, x, 1.0e-5);
+                new double[]{2.330499, 1.951372, -0.4775414, 4.365726, -0.624487, 1.038131, 1.594227}, x, 1.0e-5);
     }
 
     /**
@@ -256,10 +255,10 @@ public class CobylaTest {
                 return -0.5 * (x[0] * x[3] - x[1] * x[2] + x[2] * x[8] - x[4] * x[8] + x[4] * x[7] - x[5] * x[6]);
             }
         };
-        double[] x = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+        double[] x = {1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0};
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, 9, 14, x, rhobeg, rhoend, iprint, maxfun);
         assertArrayEquals(null,
-                new double[] { x[0], x[1], x[2], x[3], x[0], x[1], x[2], x[3], 0.0 }, x, 1.0e-4);
+                new double[]{x[0], x[1], x[2], x[3], x[0], x[1], x[2], x[3], 0.0}, x, 1.0e-4);
     }
 
     //Kperzyns problem test
@@ -270,7 +269,6 @@ public class CobylaTest {
         approximationFromFileTask.loadExperimentalDataFromFilesPaths
                 ("optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalStress",
                         "optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalDeformation");
-        System.out.format("%nOutput from test problem 1 (Simple quadratic)%n");
         Calcfc calcfc = new Calcfc() {
             @Override
             public double compute(int n, int m, double[] x, double[] con) {
@@ -280,14 +278,49 @@ public class CobylaTest {
 
         double startingK = 140.0;
         double startingN = 10.0;
-        double[] x = {startingK, startingN };
-        int maxNumberOfIterations=50;
+        double[] x = {startingK, startingN};
+        int maxNumberOfIterations = 50;
 
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.3, 0.5, iprint, maxNumberOfIterations);
 
-        double expectedDelta = 500.0 ;//588.298177
-        assertArrayEquals(null, new double[] { -1.0, 1.0 }, x,expectedDelta );
-    }
-}
+        double expectedDelta = 500.0;//588.298177
+        assertArrayEquals(null, new double[]{-1.0, 1.0}, x, expectedDelta);
+    }}
 
-
+    //Testing of the inverse software for identification of
+    //rheological models of materials subjected to plastic deformation
+//    @Test
+//    public void testCompressedMaterialWithoutRecrystalizationSoftening() {
+//        ApproximationFromFileTask approximationFromFileTask = new ApproximationFromFileTask();
+//        approximationFromFileTask.loadExperimentalDataFromFilesPaths
+//                ("optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalStress",
+//                        "optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalDeformation");
+//
+////        approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(new CompressedMaterialWithoutRecrystalizationSoftening());
+//
+//        Calcfc calcfc = new Calcfc() {
+//            @Override
+//            public double compute(int n, int m, double[] x, double[] con) {
+//
+////                return approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().findValueForArgumentsComplex(x);
+//            }
+//        };
+//
+//        double startingR0 = 0.4;
+//        double startingK0 = 5.0;
+//        double startingN = 1.0;
+//        double startingBeta = 5.0;
+//        double startingKs = 20;
+//        double startingBetas= 60.0;
+//        double startingM = 3;
+//        double[] x = {startingR0, startingK0,startingN,startingBeta,startingKs,startingBetas,startingM};
+//        int maxNumberOfIterations = 30;
+//
+//        CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.3, 0.5, iprint, maxNumberOfIterations);
+//
+//        double expectedDelta = 500.0;
+//        assertArrayEquals(null, new double[]{-1.0, 1.0}, x, expectedDelta);
+//    }
+//}
+//
+//
