@@ -5,6 +5,7 @@ import de.xypron.jcobyla.Calcfc;
 import de.xypron.jcobyla.Cobyla;
 import de.xypron.jcobyla.CobylaExitStatus;
 import optimization.nonlinear.unconstrained.core.ApproximationFromFileTask;
+import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import org.junit.Test;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -272,6 +273,12 @@ public class CobylaTest {
         Calcfc calcfc = new Calcfc() {
             @Override
             public double compute(int n, int m, double[] x, double[] con) {
+                double parameterK = x[0];
+                double parameterN = x[1];
+                SimpleMaterialFunction simpleMaterialFunction = new SimpleMaterialFunction();
+                simpleMaterialFunction.setParameterK(parameterK);
+                simpleMaterialFunction.setParameterN(parameterN);
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(simpleMaterialFunction);
                 return approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().findValueForArguments(x);
             }
         };

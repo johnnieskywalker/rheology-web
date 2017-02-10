@@ -25,6 +25,9 @@ public interface SearchMethod {
      */
     public int getNumberOfIterations();
 
-    public void setStartingPoints(double[] startingPoints);
+    public void setCurrentSearchPoints(double[] currentSearchPoints);
+
+    public double setNewParameterValuesAndFindMaterialFunctionValue(ObjectiveFunction objectiveFunction, double[]
+            newFunctionArguments);
 
 }

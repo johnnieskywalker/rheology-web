@@ -6,26 +6,27 @@ import de.xypron.jcobyla.CobylaExitStatus;
 
 public class PowellAlgorithm implements SearchMethod {
 
-    double[] startingPoints;
+    double[] currentSearchPoints;
 
     @Override
     public void findMinimum(ObjectiveFunction objectiveFunction) {
         Calcfc calcfc = new Calcfc() {
             @Override
             public double compute(int n, int m, double[] x, double[] con) {
-                return objectiveFunction.findValueForArguments(x);
+//                return objectiveFunction.findValueForArguments(x);
+            return    setNewParameterValuesAndFindMaterialFunctionValue(objectiveFunction, x);
             }
         };
 
 
         int maxNumberOfIterations=50;
         int printLevel = 1;
-        CobylaExitStatus result = Cobyla.findMinimum(calcfc, startingPoints.length, 0, startingPoints, 0.3, 0.5, printLevel, maxNumberOfIterations);
+        CobylaExitStatus result = Cobyla.findMinimum(calcfc, currentSearchPoints.length, 0, currentSearchPoints, 0.3, 0.5, printLevel, maxNumberOfIterations);
     }
-
+    //TODO - ŁW dla niej tez by sie przydal test jak dla hooke, bo jak narazie testuje czystą Cobyla
     @Override
     public double[] getResultPointCoordinates() {
-        return startingPoints;
+        return currentSearchPoints;
     }
 
     @Override
@@ -34,7 +35,14 @@ public class PowellAlgorithm implements SearchMethod {
         return 0;
     }
 
-    public void setStartingPoints(double[] startingPoints){
-        this.startingPoints = startingPoints;
+    @Override
+    public double setNewParameterValuesAndFindMaterialFunctionValue(ObjectiveFunction objectiveFunction, double[]
+            newFunctionArguments) {
+        objectiveFunction.getMaterialFunction().setNewOptimizedParameterValues(newFunctionArguments);
+        return objectiveFunction.findValueForArguments(newFunctionArguments);
+    }
+
+    public void setCurrentSearchPoints(double[] currentSearchPoints){
+        this.currentSearchPoints = currentSearchPoints;
     }
 }

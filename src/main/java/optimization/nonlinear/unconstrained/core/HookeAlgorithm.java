@@ -66,7 +66,9 @@ public class HookeAlgorithm implements SearchMethod {
 
         for (iterationNumber = 0; iterationNumber < numberOfVariables; iterationNumber++) {
             currentSearchPoint[iterationNumber] = point[iterationNumber] + stepLengthsForIterations[iterationNumber];
-            currentFunctionValue = objectiveFunction.findValueForArguments(currentSearchPoint);
+//            currentFunctionValue = objectiveFunction.findValueForArguments(currentSearchPoint);
+            currentFunctionValue=setNewParameterValuesAndFindMaterialFunctionValue(objectiveFunction,
+                    currentSearchPoint);
             setNumberOfFunctionEvaluations(getNumberOfFunctionEvaluations() + 1);
 
             if (currentFunctionValue < minumumValueOfFunction) {
@@ -74,7 +76,9 @@ public class HookeAlgorithm implements SearchMethod {
             } else {
                 stepLengthsForIterations[iterationNumber] = 0.0 - stepLengthsForIterations[iterationNumber];
                 currentSearchPoint[iterationNumber] = point[iterationNumber] + stepLengthsForIterations[iterationNumber];
-                currentFunctionValue = objectiveFunction.findValueForArguments(currentSearchPoint);
+//                currentFunctionValue = objectiveFunction.findValueForArguments(currentSearchPoint);
+                currentFunctionValue=setNewParameterValuesAndFindMaterialFunctionValue(objectiveFunction,
+                        currentSearchPoint);
                 setNumberOfFunctionEvaluations(getNumberOfFunctionEvaluations() + 1);
 
                 minumumValueOfFunction = checkIfMinimumFound(point, minumumValueOfFunction, currentSearchPoint, currentFunctionValue, iterationNumber);
@@ -126,7 +130,7 @@ public class HookeAlgorithm implements SearchMethod {
 
         loadStepsSizeLenghtsForCoordinates(numberOfVariables, startingPointCoordinates, rhoStepsizeGeometricShrink, previousFunctionArguments, newFunctionArguments, stepSizeLenghts);
 
-        double previousFunctionValue = objectiveFunction.findValueForArguments(newFunctionArguments);
+        double previousFunctionValue = setNewParameterValuesAndFindMaterialFunctionValue(objectiveFunction, newFunctionArguments);
         setNumberOfFunctionEvaluations(getNumberOfFunctionEvaluations() + 1);
 
         double newFunctionValue = previousFunctionValue;
@@ -156,6 +160,13 @@ public class HookeAlgorithm implements SearchMethod {
         findBestNewPoint(numberOfVariables, endingPointCoordinates, previousFunctionArguments);
         setResultPointCoordinates(endingPointCoordinates);
 
+    }
+
+    @Override
+    public double setNewParameterValuesAndFindMaterialFunctionValue(ObjectiveFunction objectiveFunction, double[]
+            newFunctionArguments) {
+        objectiveFunction.getMaterialFunction().setNewOptimizedParameterValues(newFunctionArguments);
+        return objectiveFunction.findValueForArguments(newFunctionArguments);
     }
 
     private void loadStepsSizeLenghtsForCoordinates(int numberOfVariables, double[] startingPointCoordinates, double rhoStepsizeGeometricShrink, double[] previousFunctionArguments, double[] newFunctionArguments, double[] stepSizeLenghts) {
@@ -196,11 +207,11 @@ public class HookeAlgorithm implements SearchMethod {
     private void logIterationInformations(int numberOfVariables, double[] previousFunctionArguments, double
             previousFunctionValue) {
         System.out.printf(
-                "\nAfter %5d funevals, f(startingPoints) =  %.4e at\n", getNumberOfFunctionEvaluations(), previousFunctionValue
+                "\nAfter %5d funevals, f(currentSearchPoints) =  %.4e at\n", getNumberOfFunctionEvaluations(), previousFunctionValue
         );
 
         for (int currentNumberOfVariable = 0; currentNumberOfVariable < numberOfVariables; currentNumberOfVariable++) {
-            System.out.printf("   startingPoints[%2d] = %.4e\n", currentNumberOfVariable,
+            System.out.printf("   currentSearchPoints[%2d] = %.4e\n", currentNumberOfVariable,
                     previousFunctionArguments[currentNumberOfVariable]);
         }
     }
@@ -310,8 +321,7 @@ public class HookeAlgorithm implements SearchMethod {
         }
     }
 
-    @Override
-    public void setStartingPoints(double[] startingPoints) {
+    public void setCurrentSearchPoints(double[] currentSearchPoints) {
 
     //TODO - ŁW przydałoby się to zrobić
     }

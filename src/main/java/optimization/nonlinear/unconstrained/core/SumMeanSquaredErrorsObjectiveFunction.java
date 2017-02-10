@@ -15,7 +15,6 @@
 package optimization.nonlinear.unconstrained.core;
 
 import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
-import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,17 +26,18 @@ public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFun
     private List<Double> deformations = new ArrayList<>();
     private List<Double> experimentalStresses = new ArrayList<>();
 
-    private MaterialFunction materialFunction = new SimpleMaterialFunction();
+    private MaterialFunction materialFunction;// = new SimpleMaterialFunction();
 
     public double findValueForArguments(double[] functionArguments) {
 
-        double k = functionArguments[0];
-        double n = functionArguments[1];
+//        double k = functionArguments[0];
+//        double n = functionArguments[1];
 
         double sumOfMeanSquaredErrors = 0.0;
 
         for (int index = 0; index < deformations.size(); index++) {
-            double currentCalculatedStress = calculateMaterialStressInPoint(k, n, deformations.get(index));
+//            double currentCalculatedStress = calculateMaterialStressInPoint(k, n, deformations.get(index));
+            double currentCalculatedStress = calculateMaterialStressInPoint(deformations.get(index));
             sumOfMeanSquaredErrors += meanSquaredError(experimentalStresses.get(index), currentCalculatedStress);
         }
 
@@ -48,6 +48,12 @@ public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFun
         return Math.sqrt(Math.pow(experimentalStress - calculatedStress, 2));
     }
 
+    public double calculateMaterialStressInPoint(double experimentalDeformationValue) {
+        return materialFunction.calculateMaterialStressInPoint(experimentalDeformationValue);
+    }
+
+    @Deprecated
+    //Used only by converter
     public double calculateMaterialStressInPoint(double parameterK, double parameterN, double experimentalDeformationValue) {
         ArrayList<Double> parameters = new ArrayList<>();
         parameters.add(parameterK);
@@ -79,6 +85,7 @@ public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFun
         this.experimentalStresses = experimentalStresses;
     }
 
+    @Override
     public MaterialFunction getMaterialFunction() {
         return materialFunction;
     }

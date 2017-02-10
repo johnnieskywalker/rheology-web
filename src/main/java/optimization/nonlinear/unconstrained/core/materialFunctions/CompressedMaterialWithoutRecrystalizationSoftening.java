@@ -1,20 +1,22 @@
 package optimization.nonlinear.unconstrained.core.materialFunctions;
 
 import java.util.List;
+
 import static java.lang.Math.*;
 
 /**
  * Function (4) from
  * Testing of the inverse software for identification of
- rheological models of materials subjected to plastic deformation
-
- by
- D. SZELIGA, M. PIETRZYK
- Akademia Górniczo-Hutnicza, Mickiewicza
-
+ * rheological models of materials subjected to plastic deformation
+ * <p>
+ * by
+ * D. SZELIGA, M. PIETRZYK
+ * Akademia Górniczo-Hutnicza, Mickiewicza
  */
 
 public class CompressedMaterialWithoutRecrystalizationSoftening implements MaterialFunction {
+
+    public static int NUMBER_OF_PARAMETERS = 7;
 
     double r0;
     double k0;
@@ -28,35 +30,57 @@ public class CompressedMaterialWithoutRecrystalizationSoftening implements Mater
     double constStrainRate;
 
 
-
+    @Override
     public double calculateMaterialStressInPoint(double experimentalDeformationValue) {
         double w = calculateW(experimentalDeformationValue);
-        return sqrt(3)*(calculateMiddleBracketsPart(w,experimentalDeformationValue))*pow(sqrt(3)
-                *constStrainRate,m);
+        return sqrt(3) * (calculateMiddleBracketsPart(w, experimentalDeformationValue)) * pow(sqrt(3)
+                * constStrainRate, m);
     }
 
     //w*k0*epsilon^n*exp(beta/T)+(1-W)*Ks*exp(BetaS/T)
-    public double calculateMiddleBracketsPart(double w, double experimentalDeformationValue){
-        return calculateFirstPartOfSumInBrackets(w,experimentalDeformationValue)+calculateSecondPartOfSumInBrackets(w);
+    public double calculateMiddleBracketsPart(double w, double experimentalDeformationValue) {
+        return calculateFirstPartOfSumInBrackets(w, experimentalDeformationValue) + calculateSecondPartOfSumInBrackets(w);
     }
 
-    public double calculateFirstPartOfSumInBrackets(double w, double experimentalDeformationValue){
-        return w*k0*pow(experimentalDeformationValue,
-                n)*exp(beta/constTemp);
+    public double calculateFirstPartOfSumInBrackets(double w, double experimentalDeformationValue) {
+        return w * k0 * pow(experimentalDeformationValue,
+                n) * exp(beta / constTemp);
     }
 
-    public double calculateSecondPartOfSumInBrackets(double w){
-        return (1-w)*ks*exp(betas/constTemp);
+    public double calculateSecondPartOfSumInBrackets(double w) {
+        return (1 - w) * ks * exp(betas / constTemp);
     }
 
 
-
-
-
-    public double calculateW(double deformation){
-        return exp(-r0*deformation);
+    public double calculateW(double deformation) {
+        return exp(-r0 * deformation);
     }
 
+
+    @Override
+    public void setNewOptimizedParameterValues(double[] newOptimizedParameterValues) throws IllegalArgumentException {
+        if (newOptimizedParameterValues.length < NUMBER_OF_PARAMETERS) {
+            throw new IllegalArgumentException("Too few optimized parameters, this material function needs \n" +
+                    " double r0;\n" +
+                    "    double k0;\n" +
+                    "    double n;\n" +
+                    "    double beta;\n" +
+                    "    double ks;\n" +
+                    "    double betas;\n" +
+                    "    double m;\n " +
+                    "which means array size should be "+NUMBER_OF_PARAMETERS + " but was" +
+                    newOptimizedParameterValues.length);
+        } else {
+
+             r0= newOptimizedParameterValues[0];
+             k0= newOptimizedParameterValues[1];
+             n= newOptimizedParameterValues[2];
+             beta= newOptimizedParameterValues[3];
+             ks= newOptimizedParameterValues[4];
+             betas= newOptimizedParameterValues[5];
+             m= newOptimizedParameterValues[6];
+        }
+    }
 
     @Override
     @Deprecated

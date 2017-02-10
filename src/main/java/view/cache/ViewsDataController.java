@@ -7,7 +7,6 @@ import optimization.nonlinear.unconstrained.core.PowellAlgorithm;
 import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask;
 import org.primefaces.model.chart.LineChartModel;
-import utils.ConstantValues;
 import view.TableView;
 import view.wrappers.TableRowWrapper;
 
@@ -92,7 +91,6 @@ public class ViewsDataController {
     }
 
     public void setHookeJeevesAlgorithm(){
-        double[] startPoint= {ConstantValues.STARTING_K_VALUE,ConstantValues.STARTING_N_VALUE};
         approximationFromTableWrappersTask.setSearchMethod(new HookeAlgorithm());
     }
 

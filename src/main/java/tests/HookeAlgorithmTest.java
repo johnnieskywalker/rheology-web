@@ -2,6 +2,7 @@ package tests;
 
 import optimization.nonlinear.unconstrained.core.ApproximationFromFileTask;
 import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
+import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,6 +28,12 @@ public class HookeAlgorithmTest {
         startPoint[HookeAlgorithm.INDEX_ONE] = 0.1;
 
         loadExperimentalData(approximationFromFileTask);
+        double parameterK = startPoint[0];
+        double parameterN = startPoint[1];
+        SimpleMaterialFunction simpleMaterialFunction = new SimpleMaterialFunction();
+        simpleMaterialFunction.setParameterK(parameterK);
+        simpleMaterialFunction.setParameterN(parameterN);
+        approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(simpleMaterialFunction);
 
         HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
         hookeAlgorithm.findMinimum(
