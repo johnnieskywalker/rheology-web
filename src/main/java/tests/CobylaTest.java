@@ -299,7 +299,7 @@ public class CobylaTest {
     //Testing of the inverse software for identification of
     //rheological models of materials subjected to plastic deformation
     @Test
-    public void testCompressedMaterialWithoutRecrystalizationSoftening() {
+    public void shouldApproximateMinimumCompressedMaterialWithoutRecrystalizationSoftening() {
         ApproximationFromFileTask approximationFromFileTask = new ApproximationFromFileTask();
         approximationFromFileTask.loadExperimentalDataFromFilesPaths
                 ("optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalStress",
