@@ -1,5 +1,6 @@
-package optimization.nonlinear.unconstrained.core.materialFunctions;
+package tests;
 
+import optimization.nonlinear.unconstrained.core.materialFunctions.CompressedMaterialWithoutRecrystalizationSoftening;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -30,8 +31,8 @@ public class CompressedMaterialWithoutRecrystalizationSofteningTest {
         compressedMaterialWithoutRecrystalizationSoftening.setBetas(startingBetas);
         compressedMaterialWithoutRecrystalizationSoftening.setM(startingM);
 
-        compressedMaterialWithoutRecrystalizationSoftening.setConstTemp(processTemperature);
-        compressedMaterialWithoutRecrystalizationSoftening.setConstStrainRate(processStrainRate);
+        compressedMaterialWithoutRecrystalizationSoftening.setProcessTemperature(processTemperature);
+        compressedMaterialWithoutRecrystalizationSoftening.setProcessStrainRate(processStrainRate);
     }
 
     @Test

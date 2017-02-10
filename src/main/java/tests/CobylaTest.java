@@ -5,6 +5,7 @@ import de.xypron.jcobyla.Calcfc;
 import de.xypron.jcobyla.Cobyla;
 import de.xypron.jcobyla.CobylaExitStatus;
 import optimization.nonlinear.unconstrained.core.ApproximationFromFileTask;
+import optimization.nonlinear.unconstrained.core.materialFunctions.CompressedMaterialWithoutRecrystalizationSoftening;
 import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import org.junit.Test;
 
@@ -292,42 +293,68 @@ public class CobylaTest {
 
         double expectedDelta = 500.0;//588.298177
         assertArrayEquals(null, new double[]{-1.0, 1.0}, x, expectedDelta);
-    }}
+    }
 
+    //Material Function
     //Testing of the inverse software for identification of
     //rheological models of materials subjected to plastic deformation
-//    @Test
-//    public void testCompressedMaterialWithoutRecrystalizationSoftening() {
-//        ApproximationFromFileTask approximationFromFileTask = new ApproximationFromFileTask();
-//        approximationFromFileTask.loadExperimentalDataFromFilesPaths
-//                ("optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalStress",
-//                        "optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalDeformation");
-//
-////        approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(new CompressedMaterialWithoutRecrystalizationSoftening());
-//
-//        Calcfc calcfc = new Calcfc() {
-//            @Override
-//            public double compute(int n, int m, double[] x, double[] con) {
-//
-////                return approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().findValueForArgumentsComplex(x);
-//            }
-//        };
-//
-//        double startingR0 = 0.4;
-//        double startingK0 = 5.0;
-//        double startingN = 1.0;
-//        double startingBeta = 5.0;
-//        double startingKs = 20;
-//        double startingBetas= 60.0;
-//        double startingM = 3;
-//        double[] x = {startingR0, startingK0,startingN,startingBeta,startingKs,startingBetas,startingM};
-//        int maxNumberOfIterations = 30;
-//
-//        CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.3, 0.5, iprint, maxNumberOfIterations);
-//
-//        double expectedDelta = 500.0;
-//        assertArrayEquals(null, new double[]{-1.0, 1.0}, x, expectedDelta);
-//    }
-//}
-//
-//
+    @Test
+    public void testCompressedMaterialWithoutRecrystalizationSoftening() {
+        ApproximationFromFileTask approximationFromFileTask = new ApproximationFromFileTask();
+        approximationFromFileTask.loadExperimentalDataFromFilesPaths
+                ("optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalStress",
+                        "optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalDeformation");
+
+        double startingR0 = 1.0;
+        double startingK0 = 4.0;
+        double startingN = 1.0;
+        double startingBeta = 1.0;
+        double startingKs = 1.0;
+        double startingBetas = 1.0;
+        double startingM = 6.0;
+
+        double processTemperature = 1200.0;
+        double processStrainRate=1.0;
+
+        CompressedMaterialWithoutRecrystalizationSoftening compressedMaterialWithoutRecrystalizationSoftening = new
+                CompressedMaterialWithoutRecrystalizationSoftening();
+
+        compressedMaterialWithoutRecrystalizationSoftening.setR0(startingR0);
+        compressedMaterialWithoutRecrystalizationSoftening.setK0(startingK0);
+        compressedMaterialWithoutRecrystalizationSoftening.setN(startingN);
+        compressedMaterialWithoutRecrystalizationSoftening.setBeta(startingBeta);
+        compressedMaterialWithoutRecrystalizationSoftening.setKs(startingKs);
+        compressedMaterialWithoutRecrystalizationSoftening.setBetas(startingBetas);
+        compressedMaterialWithoutRecrystalizationSoftening.setM(startingM);
+
+        compressedMaterialWithoutRecrystalizationSoftening.setProcessTemperature(processTemperature);
+        compressedMaterialWithoutRecrystalizationSoftening.setProcessStrainRate(processStrainRate);
+
+
+
+        Calcfc calcfc = new Calcfc() {
+            @Override
+            public double compute(int n, int m, double[] x, double[] con) {
+                compressedMaterialWithoutRecrystalizationSoftening.setNewOptimizedParameterValues(x);
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(compressedMaterialWithoutRecrystalizationSoftening);
+                return approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().findValueForArguments(x);
+            }
+        };
+
+
+        double[] x = {startingR0, startingK0,startingN,startingBeta,startingKs,startingBetas,startingM};
+        int maxNumberOfIterations = 30;
+
+        CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.05, 0.7, iprint, maxNumberOfIterations);
+
+        double expectedR0 = 0.281819330397332;
+        double expectedK0 = 4.28531186111313;
+        double expectedN = 0.307236289544873;
+        double expectedBeta = 2.59731511945659;
+        double expectedKs = -2.05711719392693;
+        double expectedBetas = 51.8382906608294;
+        double expectedM = 5.80888097011669;
+        double expectedDelta = 60.0;
+        assertArrayEquals(null, new double[]{expectedR0, expectedK0,expectedN,expectedBeta,expectedKs,expectedBetas,expectedM}, x, expectedDelta);
+    }
+}

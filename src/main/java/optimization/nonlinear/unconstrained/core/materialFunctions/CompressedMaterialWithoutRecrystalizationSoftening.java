@@ -8,7 +8,6 @@ import static java.lang.Math.*;
  * Function (4) from
  * Testing of the inverse software for identification of
  * rheological models of materials subjected to plastic deformation
- * <p>
  * by
  * D. SZELIGA, M. PIETRZYK
  * Akademia Górniczo-Hutnicza, Mickiewicza
@@ -26,15 +25,15 @@ public class CompressedMaterialWithoutRecrystalizationSoftening implements Mater
     double betas;
     double m;
 
-    double constTemp;
-    double constStrainRate;
+    double processTemperature;
+    double processStrainRate;
 
 
     @Override
     public double calculateMaterialStressInPoint(double experimentalDeformationValue) {
         double w = calculateW(experimentalDeformationValue);
         return sqrt(3) * (calculateMiddleBracketsPart(w, experimentalDeformationValue)) * pow(sqrt(3)
-                * constStrainRate, m);
+                * processStrainRate, m);
     }
 
     //w*k0*epsilon^n*exp(beta/T)+(1-W)*Ks*exp(BetaS/T)
@@ -44,11 +43,11 @@ public class CompressedMaterialWithoutRecrystalizationSoftening implements Mater
 
     public double calculateFirstPartOfSumInBrackets(double w, double experimentalDeformationValue) {
         return w * k0 * pow(experimentalDeformationValue,
-                n) * exp(beta / constTemp);
+                n) * exp(beta / processTemperature);
     }
 
     public double calculateSecondPartOfSumInBrackets(double w) {
-        return (1 - w) * ks * exp(betas / constTemp);
+        return (1 - w) * ks * exp(betas / processTemperature);
     }
 
 
@@ -144,19 +143,19 @@ public class CompressedMaterialWithoutRecrystalizationSoftening implements Mater
         this.m = m;
     }
 
-    public double getConstTemp() {
-        return constTemp;
+    public double getProcessTemperature() {
+        return processTemperature;
     }
 
-    public void setConstTemp(double constTemp) {
-        this.constTemp = constTemp;
+    public void setProcessTemperature(double processTemperature) {
+        this.processTemperature = processTemperature;
     }
 
-    public double getConstStrainRate() {
-        return constStrainRate;
+    public double getProcessStrainRate() {
+        return processStrainRate;
     }
 
-    public void setConstStrainRate(double constStrainRate) {
-        this.constStrainRate = constStrainRate;
+    public void setProcessStrainRate(double processStrainRate) {
+        this.processStrainRate = processStrainRate;
     }
 }
