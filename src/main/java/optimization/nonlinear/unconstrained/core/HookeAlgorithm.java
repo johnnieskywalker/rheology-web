@@ -214,6 +214,8 @@ public class HookeAlgorithm implements SearchMethod {
             System.out.printf("   currentSearchPoints[%2d] = %.4e\n", currentNumberOfVariable,
                     previousFunctionArguments[currentNumberOfVariable]);
         }
+
+        System.out.println("f(currentSearchPoints) =  "+ previousFunctionValue);
     }
 
     private void findBestNewPoint(int numberOfVariables, double[] newFunctionArguments, double[] previousFunctionArguments) {
