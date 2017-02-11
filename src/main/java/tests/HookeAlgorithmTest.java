@@ -29,7 +29,7 @@ public class HookeAlgorithmTest {
         startPoint[HookeAlgorithm.INDEX_ZERO] = 0.1;
         startPoint[HookeAlgorithm.INDEX_ONE] = 0.1;
 
-        loadExperimentalData(approximationFromFileTask);
+        loadHypotheticalData(approximationFromFileTask);
         double parameterK = startPoint[0];
         double parameterN = startPoint[1];
         SimpleMaterialFunction simpleMaterialFunction = new SimpleMaterialFunction();
@@ -57,7 +57,7 @@ public class HookeAlgorithmTest {
     //rheological models of materials subjected to plastic deformation
     @Test
     public void shouldApproximateMinimumCompressedMaterialWithoutRecrystalizationSoftening() {
-        loadExperimentalData(approximationFromFileTask);
+        loadHypotheticalData(approximationFromFileTask);
 
         double rho = approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().STRPSIZE_GEOMETRIC_SHRINK_RHO;
         double epsilon = HookeAlgorithm.ENDING_VALUE_OF_STEPSIZE;
@@ -116,10 +116,81 @@ public class HookeAlgorithmTest {
 
     }
 
-    public static void loadExperimentalData(ApproximationFromFileTask approximationFromFileTask) {
+    public static void loadHypotheticalData(ApproximationFromFileTask approximationFromFileTask) {
         approximationFromFileTask.loadExperimentalDataFromFilesPaths
                 ("optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalStress",
                         "optimizationTasksData/kperzyns_aproksymacja_data/taskData/experimentalDeformation");
+    }
+
+//    Data from JMatPro
+//    Stal 38MnSV4
+//    Temp 800C
+//    predkosc odkształcenia : 1
+    @Test
+    public void shouldApproximateMinimumCompressedMaterialWithoutRecrystalizationSofteningUsingFEMData() {
+        loadFEMDataFor38MnSV4(approximationFromFileTask);
+
+        double rho = approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().STRPSIZE_GEOMETRIC_SHRINK_RHO;
+        double epsilon = HookeAlgorithm.ENDING_VALUE_OF_STEPSIZE;
+
+        double startingR0 = 1.0;
+        double startingK0 = 4.0;
+        double startingN = 1.0;
+        double startingBeta = 1.0;
+        double startingKs = 1.0;
+        double startingBetas = 1.0;
+        double startingM = 6.0;
+
+        double processTemperature = 800.0;
+        double processStrainRate = 1.0;
+
+        CompressedMaterialWithoutRecrystalizationSoftening compressedMaterialWithoutRecrystalizationSoftening = new
+                CompressedMaterialWithoutRecrystalizationSoftening();
+
+        compressedMaterialWithoutRecrystalizationSoftening.setR0(startingR0);
+        compressedMaterialWithoutRecrystalizationSoftening.setK0(startingK0);
+        compressedMaterialWithoutRecrystalizationSoftening.setN(startingN);
+        compressedMaterialWithoutRecrystalizationSoftening.setBeta(startingBeta);
+        compressedMaterialWithoutRecrystalizationSoftening.setKs(startingKs);
+        compressedMaterialWithoutRecrystalizationSoftening.setBetas(startingBetas);
+        compressedMaterialWithoutRecrystalizationSoftening.setM(startingM);
+
+        compressedMaterialWithoutRecrystalizationSoftening.setProcessTemperature(processTemperature);
+        compressedMaterialWithoutRecrystalizationSoftening.setProcessStrainRate(processStrainRate);
+
+        approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction()
+                .setMaterialFunction(compressedMaterialWithoutRecrystalizationSoftening);
+
+        double[] startPoint = {startingR0, startingK0, startingN, startingBeta, startingKs, startingBetas, startingM};
+
+        int numberOfVariables = 7;
+        double[] resultPoints = new double[numberOfVariables];
+        HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
+        hookeAlgorithm.findMinimum(
+                numberOfVariables, startPoint, resultPoints, rho, epsilon, HookeAlgorithm.MAXIMUM_NUMBER_OF_ITERATIONS,
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction());
+
+        printResults(numberOfVariables, hookeAlgorithm.getNumberOfIterations(), resultPoints);
+
+        double expectedR0 = 2.40745727147078;
+        double expectedK0 = 8.87236792938996;
+        double expectedN = 0.126984343385936;
+        double expectedBeta = 14.430115193442;
+        double expectedKs = 6.38443096809023;
+        double expectedBetas = -12.4244449354746;
+        double expectedM = 5.78962279112878;
+        double expectedDelta = 19.0;
+        assertArrayEquals(null,
+                new double[]{expectedR0, expectedK0,expectedN,expectedBeta,expectedKs,expectedBetas,expectedM},
+                resultPoints,
+                expectedDelta);
+
+    }
+
+    public static void loadFEMDataFor38MnSV4(ApproximationFromFileTask approximationFromFileTask) {
+        approximationFromFileTask.loadExperimentalDataFromFilesPaths
+                ("optimizationTasksData/JMatPro/microAlloy/naprezeniaWTemp800PredkoscOdkszt1.txt",
+                        "optimizationTasksData/JMatPro/microAlloy/odksztalcenia.txt");
     }
 
     private static void printResults(int numberOfVariables, int numberOfIterations, double[] resultPoints) {

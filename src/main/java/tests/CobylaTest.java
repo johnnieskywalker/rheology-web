@@ -357,4 +357,11 @@ public class CobylaTest {
         double expectedDelta = 60.0;
         assertArrayEquals(null, new double[]{expectedR0, expectedK0,expectedN,expectedBeta,expectedKs,expectedBetas,expectedM}, x, expectedDelta);
     }
+
+
+    public static void loadFEMDataFor38MnSV4(ApproximationFromFileTask approximationFromFileTask) {
+        approximationFromFileTask.loadExperimentalDataFromFilesPaths
+                ("optimizationTasksData/JMatPro/microAlloy/naprezeniaWTemp800PredkoscOdkszt1.txt",
+                        "optimizationTasksData/JMatPro/microAlloy/odksztalcenia.txt");
+    }
 }
