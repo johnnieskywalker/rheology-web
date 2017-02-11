@@ -314,7 +314,7 @@ public class CobylaTest {
         double startingM = 6.0;
 
         double processTemperature = 1200.0;
-        double processStrainRate=1.0;
+        double processStrainRate = 1.0;
 
         CompressedMaterialWithoutRecrystalizationSoftening compressedMaterialWithoutRecrystalizationSoftening = new
                 CompressedMaterialWithoutRecrystalizationSoftening();
@@ -331,7 +331,6 @@ public class CobylaTest {
         compressedMaterialWithoutRecrystalizationSoftening.setProcessStrainRate(processStrainRate);
 
 
-
         Calcfc calcfc = new Calcfc() {
             @Override
             public double compute(int n, int m, double[] x, double[] con) {
@@ -342,7 +341,7 @@ public class CobylaTest {
         };
 
 
-        double[] x = {startingR0, startingK0,startingN,startingBeta,startingKs,startingBetas,startingM};
+        double[] x = {startingR0, startingK0, startingN, startingBeta, startingKs, startingBetas, startingM};
         int maxNumberOfIterations = 30;
 
         CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.05, 0.7, iprint, maxNumberOfIterations);
@@ -355,9 +354,69 @@ public class CobylaTest {
         double expectedBetas = 51.8382906608294;
         double expectedM = 5.80888097011669;
         double expectedDelta = 60.0;
-        assertArrayEquals(null, new double[]{expectedR0, expectedK0,expectedN,expectedBeta,expectedKs,expectedBetas,expectedM}, x, expectedDelta);
+        assertArrayEquals(null, new double[]{expectedR0, expectedK0, expectedN, expectedBeta, expectedKs, expectedBetas, expectedM}, x, expectedDelta);
     }
 
+    //    Data from JMatPro
+    //    Stal 38MnSV4
+    //    Temp 800C
+    //    predkosc odkształcenia : 1
+    @Test
+    public void shouldApproximateMinimumCompressedMaterialWithoutRecrystalizationSofteningUsingFEMData() {
+        ApproximationFromFileTask approximationFromFileTask = new ApproximationFromFileTask();
+        loadFEMDataFor38MnSV4(approximationFromFileTask);
+
+        double startingR0 = 1.0;
+        double startingK0 = 4.0;
+        double startingN = 1.0;
+        double startingBeta = 1.0;
+        double startingKs = 1.0;
+        double startingBetas = 1.0;
+        double startingM = 6.0;
+
+        double processTemperature = 800.0;
+        double processStrainRate = 1.0;
+
+        CompressedMaterialWithoutRecrystalizationSoftening compressedMaterialWithoutRecrystalizationSoftening = new
+                CompressedMaterialWithoutRecrystalizationSoftening();
+
+        compressedMaterialWithoutRecrystalizationSoftening.setR0(startingR0);
+        compressedMaterialWithoutRecrystalizationSoftening.setK0(startingK0);
+        compressedMaterialWithoutRecrystalizationSoftening.setN(startingN);
+        compressedMaterialWithoutRecrystalizationSoftening.setBeta(startingBeta);
+        compressedMaterialWithoutRecrystalizationSoftening.setKs(startingKs);
+        compressedMaterialWithoutRecrystalizationSoftening.setBetas(startingBetas);
+        compressedMaterialWithoutRecrystalizationSoftening.setM(startingM);
+
+        compressedMaterialWithoutRecrystalizationSoftening.setProcessTemperature(processTemperature);
+        compressedMaterialWithoutRecrystalizationSoftening.setProcessStrainRate(processStrainRate);
+
+
+        Calcfc calcfc = new Calcfc() {
+            @Override
+            public double compute(int n, int m, double[] x, double[] con) {
+                compressedMaterialWithoutRecrystalizationSoftening.setNewOptimizedParameterValues(x);
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(compressedMaterialWithoutRecrystalizationSoftening);
+                return approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().findValueForArguments(x);
+            }
+        };
+
+
+        double[] x = {startingR0, startingK0, startingN, startingBeta, startingKs, startingBetas, startingM};
+        int maxNumberOfIterations = 50;
+
+        CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.05, 0.7, iprint, maxNumberOfIterations);
+
+        double expectedR0 = 2.40745727147078;
+        double expectedK0 = 8.87236792938996;
+        double expectedN = 0.126984343385936;
+        double expectedBeta = 14.430115193442;
+        double expectedKs = 6.38443096809023;
+        double expectedBetas = -12.4244449354746;
+        double expectedM = 5.78962279112878;
+        double expectedDelta = 19.0;
+        assertArrayEquals(null, new double[]{expectedR0, expectedK0, expectedN, expectedBeta, expectedKs, expectedBetas, expectedM}, x, expectedDelta);
+    }
 
     public static void loadFEMDataFor38MnSV4(ApproximationFromFileTask approximationFromFileTask) {
         approximationFromFileTask.loadExperimentalDataFromFilesPaths
