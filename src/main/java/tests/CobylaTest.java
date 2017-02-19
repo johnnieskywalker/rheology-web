@@ -423,4 +423,75 @@ public class CobylaTest {
                 ("optimizationTasksData/JMatPro/microAlloy/naprezeniaWTemp800PredkoscOdkszt1.txt",
                         "optimizationTasksData/JMatPro/microAlloy/odksztalcenia.txt");
     }
+
+    //time test for lots of data
+    //everything else is copied
+    @Test
+    public void testTimeOfCobylaFor1000Points() {
+        ApproximationFromFileTask approximationFromFileTask = new ApproximationFromFileTask();
+        loadFake1000PointsData(approximationFromFileTask);
+
+        Calcfc calcfc = new Calcfc() {
+            @Override
+            public double compute(int n, int m, double[] x, double[] con) {
+                double parameterK = x[0];
+                double parameterN = x[1];
+                SimpleMaterialFunction simpleMaterialFunction = new SimpleMaterialFunction();
+                simpleMaterialFunction.setParameterK(parameterK);
+                simpleMaterialFunction.setParameterN(parameterN);
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(simpleMaterialFunction);
+                return approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().findValueForArguments(x);
+            }
+        };
+
+        double startingK = 140.0;
+        double startingN = 10.0;
+        double[] x = {startingK, startingN};
+        int maxNumberOfIterations = 50;
+
+        CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.3, 0.5, iprint, maxNumberOfIterations);
+
+    }
+
+    //time test for lots of data
+    //everything else is copied
+    @Test
+    public void testTimeOfCobylaFor65000Points() {
+        ApproximationFromFileTask approximationFromFileTask = new ApproximationFromFileTask();
+        loadFake65000PointsData(approximationFromFileTask);
+
+        Calcfc calcfc = new Calcfc() {
+            @Override
+            public double compute(int n, int m, double[] x, double[] con) {
+                double parameterK = x[0];
+                double parameterN = x[1];
+                SimpleMaterialFunction simpleMaterialFunction = new SimpleMaterialFunction();
+                simpleMaterialFunction.setParameterK(parameterK);
+                simpleMaterialFunction.setParameterN(parameterN);
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(simpleMaterialFunction);
+                return approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().findValueForArguments(x);
+            }
+        };
+
+        double startingK = 140.0;
+        double startingN = 10.0;
+        double[] x = {startingK, startingN};
+        int maxNumberOfIterations = 50;
+
+        CobylaExitStatus result = Cobyla.findMinimum(calcfc, x.length, 0, x, 0.3, 0.5, iprint, maxNumberOfIterations);
+
+    }
+
+
+    public static void loadFake1000PointsData(ApproximationFromFileTask approximationFromFileTask) {
+        approximationFromFileTask.loadExperimentalDataFromFilesPaths
+                ("optimizationTasksData/fakeGeneratedData/1000points/fake1000stress.txt",
+                        "optimizationTasksData/fakeGeneratedData/1000points/fake1000def.txt");
+    }
+
+    public static void loadFake65000PointsData(ApproximationFromFileTask approximationFromFileTask) {
+        approximationFromFileTask.loadExperimentalDataFromFilesPaths
+                ("optimizationTasksData/fakeGeneratedData/65000points/fake65000stress.txt",
+                        "optimizationTasksData/fakeGeneratedData/65000points/fake65000def.txt");
+    }
 }

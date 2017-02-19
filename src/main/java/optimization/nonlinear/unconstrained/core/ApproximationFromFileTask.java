@@ -7,8 +7,8 @@ import java.io.FileNotFoundException;
 
 public class ApproximationFromFileTask {
 
-    protected SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new
-            SumMeanSquaredErrorsObjectiveFunction();
+    protected SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new
+            SumRootMeanSquaredErrorsObjectiveFunction();
 
     protected FileToDoublesListReader textToArrayListReader = new FileToDoublesListReader();
 
@@ -46,11 +46,11 @@ public class ApproximationFromFileTask {
         sumMeanSquaredErrorsObjectiveFunction.setDeformations(textToArrayListReader.readFileToDoubles(file));
     }
 
-    public SumMeanSquaredErrorsObjectiveFunction getSumMeanSquaredErrorsObjectiveFunction() {
+    public SumRootMeanSquaredErrorsObjectiveFunction getSumMeanSquaredErrorsObjectiveFunction() {
         return sumMeanSquaredErrorsObjectiveFunction;
     }
 
-    public void setSumMeanSquaredErrorsObjectiveFunction(SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction) {
+    public void setSumMeanSquaredErrorsObjectiveFunction(SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction) {
         this.sumMeanSquaredErrorsObjectiveFunction = sumMeanSquaredErrorsObjectiveFunction;
     }
 }

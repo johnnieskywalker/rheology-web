@@ -1,6 +1,6 @@
 package optimization.nonlinear.unconstrained.examples;
 
-import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
+import optimization.nonlinear.unconstrained.core.SumRootMeanSquaredErrorsObjectiveFunction;
 import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
 
 public class ApproximationSimpleUse {
@@ -8,7 +8,7 @@ public class ApproximationSimpleUse {
 
     public static void main(final String[] args) {
 
-        SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
+        SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumRootMeanSquaredErrorsObjectiveFunction();
 
 
         HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
@@ -43,12 +43,12 @@ public class ApproximationSimpleUse {
         }
     }
 
-    public static void mockExperimentalData(SumMeanSquaredErrorsObjectiveFunction aproximationSimple) {
+    public static void mockExperimentalData(SumRootMeanSquaredErrorsObjectiveFunction aproximationSimple) {
         mockDeformations(aproximationSimple);
         mockExperimentalStress(aproximationSimple);
     }
 
-    private static void mockDeformations(SumMeanSquaredErrorsObjectiveFunction aproximationSimple) {
+    private static void mockDeformations(SumRootMeanSquaredErrorsObjectiveFunction aproximationSimple) {
         double deformationMultiplier = 0.1;
         for (int deformationNumber = 0; deformationNumber < aproximationSimple.NUMBER_OF_POINTS;
              deformationNumber++) {
@@ -56,7 +56,7 @@ public class ApproximationSimpleUse {
         }
     }
 
-    private static void mockExperimentalStress(SumMeanSquaredErrorsObjectiveFunction aproximationSimple) {
+    private static void mockExperimentalStress(SumRootMeanSquaredErrorsObjectiveFunction aproximationSimple) {
         double stressMultiplier = 0.45;
         for (int stressNumber = 0; stressNumber < aproximationSimple.NUMBER_OF_POINTS; stressNumber++) {
             aproximationSimple.getExperimentalStresses().add(stressNumber * stressMultiplier);

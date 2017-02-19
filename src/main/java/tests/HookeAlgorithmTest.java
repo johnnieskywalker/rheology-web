@@ -199,8 +199,81 @@ public class HookeAlgorithmTest {
         );
 
         for (int i = 0; i < numberOfVariables; i++) {
-            System.out.printf("x[%3d] = %15.7e \n", i, resultPoints[i]);
+//            System.out.printf("x[%3d] = %15.7e \n", i, resultPoints[i]);
+            System.out.println("x["+i+"] = "+ resultPoints[i]);
+
         }
+    }
+
+    //time test for lots of data
+    //everything else is copied
+    @Test
+    public void testHowLongWillApproximate1000points() {
+        double rho = approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().STRPSIZE_GEOMETRIC_SHRINK_RHO;
+        double epsilon = HookeAlgorithm.ENDING_VALUE_OF_STEPSIZE;
+        int numberOfVariables = 2;
+
+        double[] startPoint = new double[numberOfVariables];
+        startPoint[HookeAlgorithm.INDEX_ZERO] = 0.1;
+        startPoint[HookeAlgorithm.INDEX_ONE] = 0.1;
+
+        loadFake1000PointsData(approximationFromFileTask);
+        double parameterK = startPoint[0];
+        double parameterN = startPoint[1];
+        SimpleMaterialFunction simpleMaterialFunction = new SimpleMaterialFunction();
+        simpleMaterialFunction.setParameterK(parameterK);
+        simpleMaterialFunction.setParameterN(parameterN);
+        approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(simpleMaterialFunction);
+
+        HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
+        double[] resultPoints = new double[numberOfVariables];
+        hookeAlgorithm.findMinimum(
+                numberOfVariables, startPoint, resultPoints, rho, epsilon, HookeAlgorithm.MAXIMUM_NUMBER_OF_ITERATIONS,
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction());
+        int numberOfIterations = hookeAlgorithm.getNumberOfIterations();
+
+        printResults(numberOfVariables, numberOfIterations, resultPoints);
+
+    }
+
+    @Test
+    public void testHowLongWillApproximate65000points() {
+        double rho = approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().STRPSIZE_GEOMETRIC_SHRINK_RHO;
+        double epsilon = HookeAlgorithm.ENDING_VALUE_OF_STEPSIZE;
+        int numberOfVariables = 2;
+
+        double[] startPoint = new double[numberOfVariables];
+        startPoint[HookeAlgorithm.INDEX_ZERO] = 0.1;
+        startPoint[HookeAlgorithm.INDEX_ONE] = 0.1;
+
+        loadFake65000PointsData(approximationFromFileTask);
+        double parameterK = startPoint[0];
+        double parameterN = startPoint[1];
+        SimpleMaterialFunction simpleMaterialFunction = new SimpleMaterialFunction();
+        simpleMaterialFunction.setParameterK(parameterK);
+        simpleMaterialFunction.setParameterN(parameterN);
+        approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction().setMaterialFunction(simpleMaterialFunction);
+
+        HookeAlgorithm hookeAlgorithm = new HookeAlgorithm();
+        double[] resultPoints = new double[numberOfVariables];
+        hookeAlgorithm.findMinimum(
+                numberOfVariables, startPoint, resultPoints, rho, epsilon, HookeAlgorithm.MAXIMUM_NUMBER_OF_ITERATIONS,
+                approximationFromFileTask.getSumMeanSquaredErrorsObjectiveFunction());
+        int numberOfIterations = hookeAlgorithm.getNumberOfIterations();
+
+        printResults(numberOfVariables, numberOfIterations, resultPoints);
+    }
+
+    public static void loadFake1000PointsData(ApproximationFromFileTask approximationFromFileTask) {
+        approximationFromFileTask.loadExperimentalDataFromFilesPaths
+                ("optimizationTasksData/fakeGeneratedData/1000points/fake1000stress.txt",
+                        "optimizationTasksData/fakeGeneratedData/1000points/fake1000def.txt");
+    }
+
+    public static void loadFake65000PointsData(ApproximationFromFileTask approximationFromFileTask) {
+        approximationFromFileTask.loadExperimentalDataFromFilesPaths
+                ("optimizationTasksData/fakeGeneratedData/65000points/fake65000stress.txt",
+                        "optimizationTasksData/fakeGeneratedData/65000points/fake65000def.txt");
     }
 
 }

@@ -28,7 +28,7 @@ public class OptimizedValuesToTableWrappersConverter {
     }
 
     private void fillMeanSquaredErrorInRow(TableRowWrapper tableRowWrapper) {
-        tableRowWrapper.setMeanSquaredError(objectiveFunction.meanSquaredError(tableRowWrapper.getExperimentalStress(),
+        tableRowWrapper.setMeanSquaredError(objectiveFunction.rootMeanSquaredError(tableRowWrapper.getExperimentalStress(),
                 tableRowWrapper.getCalculatedStress()));
     }
 

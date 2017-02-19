@@ -4,7 +4,7 @@ import calculations.OptimizedValuesToTableWrappersConverter;
 import dataloaders.TableWrappersToSumMeanSquaredErrorsReader;
 import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
 import optimization.nonlinear.unconstrained.core.SearchMethod;
-import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
+import optimization.nonlinear.unconstrained.core.SumRootMeanSquaredErrorsObjectiveFunction;
 import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
 import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import utils.ConstantValues;
@@ -18,10 +18,10 @@ public class ApproximationFromTableWrappersTask {
 
     private SearchMethod searchMethod = new HookeAlgorithm();
 
-    private SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
+    private SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumRootMeanSquaredErrorsObjectiveFunction();
 
     private int numberOfVariables = 2;
-    private double rho = SumMeanSquaredErrorsObjectiveFunction.STRPSIZE_GEOMETRIC_SHRINK_RHO;
+    private double rho = SumRootMeanSquaredErrorsObjectiveFunction.STRPSIZE_GEOMETRIC_SHRINK_RHO;
     private double epsilon = HookeAlgorithm.ENDING_VALUE_OF_STEPSIZE;
     private double[] resultPoints = new double[HookeAlgorithm.MAXIMUM_NUMBER_OF_VARIABLES];
     private double[] startPoint;

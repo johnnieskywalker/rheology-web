@@ -1,14 +1,14 @@
 package dataloaders;
 
-import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
+import optimization.nonlinear.unconstrained.core.SumRootMeanSquaredErrorsObjectiveFunction;
 import view.wrappers.TableRowWrapper;
 
 import java.util.List;
 
 public class TableWrappersToSumMeanSquaredErrorsReader {
 
-    public static SumMeanSquaredErrorsObjectiveFunction read(List<TableRowWrapper> tableRowWrappers) {
-        SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
+    public static SumRootMeanSquaredErrorsObjectiveFunction read(List<TableRowWrapper> tableRowWrappers) {
+        SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumRootMeanSquaredErrorsObjectiveFunction();
 
         tableRowWrappers.forEach(tableRowWrapper -> {
             sumMeanSquaredErrorsObjectiveFunction.addDeformation(tableRowWrapper.getDeformation());

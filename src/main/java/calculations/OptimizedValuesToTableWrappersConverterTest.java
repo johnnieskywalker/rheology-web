@@ -1,6 +1,6 @@
 package calculations;
 
-import optimization.nonlinear.unconstrained.core.SumMeanSquaredErrorsObjectiveFunction;
+import optimization.nonlinear.unconstrained.core.SumRootMeanSquaredErrorsObjectiveFunction;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +13,7 @@ public class OptimizedValuesToTableWrappersConverterTest {
 
     OptimizedValuesToTableWrappersConverter optimizedValuesToTableWrappersConverter;
 
-    SumMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction;
+    SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction;
     List<TableRowWrapper> tableRowWrappers = new ArrayList<>();
 
     double testPaarameterK = 3.0;
@@ -22,11 +22,12 @@ public class OptimizedValuesToTableWrappersConverterTest {
     double testDeformation = 2.0;
     double testExperimentalStress = 5.0;
 
+    //TODO - ŁW z jakiegos powodu w testach leci null ale webapp dziala
     @Before
     public void setUp() {
-        sumMeanSquaredErrorsObjectiveFunction = new SumMeanSquaredErrorsObjectiveFunction();
+        sumMeanSquaredErrorsObjectiveFunction = new SumRootMeanSquaredErrorsObjectiveFunction();
 
-        optimizedValuesToTableWrappersConverter=new OptimizedValuesToTableWrappersConverter();
+        optimizedValuesToTableWrappersConverter = new OptimizedValuesToTableWrappersConverter();
         optimizedValuesToTableWrappersConverter.setObjectiveFunction(sumMeanSquaredErrorsObjectiveFunction);
         optimizedValuesToTableWrappersConverter.setOptimizedParameterK(testPaarameterK);
         optimizedValuesToTableWrappersConverter.setOptimizedParameterN(testPaarameterN);
@@ -38,22 +39,22 @@ public class OptimizedValuesToTableWrappersConverterTest {
     }
 
     @Test
-    public void calculatedStressShouldBeAsExpected(){
+    public void calculatedStressShouldBeAsExpected() {
         Double expectedCalculatedStress = 6.0;
         Double calculatedStressInRow = optimizedValuesToTableWrappersConverter
                 .getTableRowWrappers()
                 .get(0).getCalculatedStress();
-        Assert.assertEquals(expectedCalculatedStress,calculatedStressInRow);
+        Assert.assertEquals(expectedCalculatedStress, calculatedStressInRow);
     }
 
     @Test
-    public void meanSquaredErrorShouldBeAsExpected(){
+    public void meanSquaredErrorShouldBeAsExpected() {
         Double expectedMeanSquaredError = 1.0;
         Double meanSquaredError = optimizedValuesToTableWrappersConverter
                 .getTableRowWrappers()
                 .get(0).getMeanSquaredError();
 
-        Assert.assertEquals(expectedMeanSquaredError,meanSquaredError);
+        Assert.assertEquals(expectedMeanSquaredError, meanSquaredError);
     }
 
 }

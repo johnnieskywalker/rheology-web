@@ -19,7 +19,7 @@ import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunct
 import java.util.ArrayList;
 import java.util.List;
 
-public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFunction {
+public final class SumRootMeanSquaredErrorsObjectiveFunction implements ObjectiveFunction {
     public static final double STRPSIZE_GEOMETRIC_SHRINK_RHO = 0.4;
     public static final int NUMBER_OF_POINTS = 9;
 
@@ -38,13 +38,13 @@ public final class SumMeanSquaredErrorsObjectiveFunction implements ObjectiveFun
         for (int index = 0; index < deformations.size(); index++) {
 //            double currentCalculatedStress = calculateMaterialStressInPoint(k, n, deformations.get(index));
             double currentCalculatedStress = calculateMaterialStressInPoint(deformations.get(index));
-            sumOfMeanSquaredErrors += meanSquaredError(experimentalStresses.get(index), currentCalculatedStress);
+            sumOfMeanSquaredErrors += rootMeanSquaredError(experimentalStresses.get(index), currentCalculatedStress);
         }
 
         return sumOfMeanSquaredErrors;
     }
 
-    public double meanSquaredError(double experimentalStress, double calculatedStress) {
+    public double rootMeanSquaredError(double experimentalStress, double calculatedStress) {
         return Math.sqrt(Math.pow(experimentalStress - calculatedStress, 2));
     }
 
