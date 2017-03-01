@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface MaterialFunction {
 
-    public double calculateMaterialStressInPoint(double experimentalDeformationValue);
+    double calculateMaterialStressInPoint(double experimentalDeformationValue);
 
     double calculateMaterialStressInPoint(List<Double> optimizedParameters, double
             experimentalDeformationValue);
 
-    void setNewOptimizedParameterValues(double [] newOptimizedParameterValues) throws IllegalArgumentException;
+    void setNewOptimizedParameterValues(double[] newOptimizedParameterValues) throws IllegalArgumentException;
 }

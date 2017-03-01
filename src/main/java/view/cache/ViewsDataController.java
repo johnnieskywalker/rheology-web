@@ -4,6 +4,7 @@ import calculations.TableWrappersToLineChartModelConverter;
 import dataloaders.FileToTableWrappersReader;
 import optimization.nonlinear.unconstrained.core.HookeAlgorithm;
 import optimization.nonlinear.unconstrained.core.PowellAlgorithm;
+import optimization.nonlinear.unconstrained.core.materialFunctions.CompressedMaterialWithoutRecrystalizationSoftening;
 import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask;
 import org.primefaces.model.chart.LineChartModel;
@@ -88,6 +89,10 @@ public class ViewsDataController {
 
     public void simpleMaterialFunction(){
         approximationFromTableWrappersTask.setMaterialFunction(new SimpleMaterialFunction());
+    }
+
+    public void compressedMaterialWithoutRecrystalizationSofteningFunction(){
+        approximationFromTableWrappersTask.setMaterialFunction(new CompressedMaterialWithoutRecrystalizationSoftening());
     }
 
     public void setHookeJeevesAlgorithm(){

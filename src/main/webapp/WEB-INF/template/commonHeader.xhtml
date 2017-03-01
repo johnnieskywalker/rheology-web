@@ -35,6 +35,8 @@
                 </p:submenu>
                 <p:submenu label="Funkcja Materiału" icon="ui-icon-contact">
                     <p:menuitem value="σ=k*ε(i)^n" action="#{viewsDataController.simpleMaterialFunction}"/>
+                    <p:menuitem value="σ=sqrt(3)* [W*K0*ε^n*exp(β/T)+(1-W)*Ks*exp(βs/T)]*(sqrt(3)*predkoscOdkszt)^m"
+                                action="#{viewsDataController.compressedMaterialWithoutRecrystalizationSofteningFunction}"/>
                 </p:submenu>
                 <p:menuitem value="Uruchom" action="#{viewsDataController.loadResultsToViews}" update="@all"/>
             </p:submenu>

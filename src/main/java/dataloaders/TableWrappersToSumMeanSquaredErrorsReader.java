@@ -7,8 +7,10 @@ import java.util.List;
 
 public class TableWrappersToSumMeanSquaredErrorsReader {
 
-    public static SumRootMeanSquaredErrorsObjectiveFunction read(List<TableRowWrapper> tableRowWrappers) {
-        SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumRootMeanSquaredErrorsObjectiveFunction();
+    private SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction;
+
+
+    public SumRootMeanSquaredErrorsObjectiveFunction read(List<TableRowWrapper> tableRowWrappers) {
 
         tableRowWrappers.forEach(tableRowWrapper -> {
             sumMeanSquaredErrorsObjectiveFunction.addDeformation(tableRowWrapper.getDeformation());
@@ -18,4 +20,7 @@ public class TableWrappersToSumMeanSquaredErrorsReader {
         return sumMeanSquaredErrorsObjectiveFunction;
     }
 
+    public TableWrappersToSumMeanSquaredErrorsReader(SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction) {
+        this.sumMeanSquaredErrorsObjectiveFunction = sumMeanSquaredErrorsObjectiveFunction;
+    }
 }

@@ -16,6 +16,8 @@ public class OptimizedValuesToTableWrappersConverter {
     private List<TableRowWrapper> tableRowWrappers;
 
     public void fillTableWrappersWithCalculatedValues() {
+        //TODO: tu sie chyba liczy to zawsze z podstawowego wzoru, podmieniac to w zaleznosciod wybranego modelu
+        // materialu
         tableRowWrappers.forEach(tableRowWrapper -> {
             fillCalculatedStressInRow(tableRowWrapper);
             fillMeanSquaredErrorInRow(tableRowWrapper);
@@ -23,8 +25,10 @@ public class OptimizedValuesToTableWrappersConverter {
     }
 
     private void fillCalculatedStressInRow(TableRowWrapper tableRowWrapper) {
-        tableRowWrapper.setCalculatedStress(objectiveFunction.calculateMaterialStressInPoint
-                (optimizedParameterK, optimizedParameterN, tableRowWrapper.getDeformation()));
+//        tableRowWrapper.setCalculatedStress(objectiveFunction.calculateMaterialStressInPoint
+//                (optimizedParameterK, optimizedParameterN, tableRowWrapper.getDeformation()));
+        tableRowWrapper.setCalculatedStress(objectiveFunction.calculateMaterialStressInPoint(tableRowWrapper
+                .getDeformation()));
     }
 
     private void fillMeanSquaredErrorInRow(TableRowWrapper tableRowWrapper) {
@@ -35,7 +39,7 @@ public class OptimizedValuesToTableWrappersConverter {
     public double getSumMeanSquaredErrorsValue() {
         double sumMeanSquaredErrors = 0.0;
         for (TableRowWrapper tableRowWrapper : tableRowWrappers) {
-            sumMeanSquaredErrors+=tableRowWrapper.getMeanSquaredError();
+            sumMeanSquaredErrors += tableRowWrapper.getMeanSquaredError();
         }
         return sumMeanSquaredErrors;
     }
