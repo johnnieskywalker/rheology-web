@@ -29,8 +29,6 @@ public class OptimizedValuesToTableWrappersConverterTest {
 
         optimizedValuesToTableWrappersConverter = new OptimizedValuesToTableWrappersConverter();
         optimizedValuesToTableWrappersConverter.setObjectiveFunction(sumMeanSquaredErrorsObjectiveFunction);
-        optimizedValuesToTableWrappersConverter.setOptimizedParameterK(testPaarameterK);
-        optimizedValuesToTableWrappersConverter.setOptimizedParameterN(testPaarameterN);
 
         tableRowWrappers.add(new TableRowWrapper(testDeformation, testExperimentalStress));
         optimizedValuesToTableWrappersConverter.setTableRowWrappers(tableRowWrappers);

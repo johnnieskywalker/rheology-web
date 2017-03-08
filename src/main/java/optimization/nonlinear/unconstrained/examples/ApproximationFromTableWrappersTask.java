@@ -82,13 +82,11 @@ public class ApproximationFromTableWrappersTask {
 
             initSimpleSearchPoints(simpleMaterialFunction);
 
-        }
-        else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction().getType().equals(MaterialFunctionType
-                .SIMPLE)){
+        } else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction().getType().equals(MaterialFunctionType
+                .SIMPLE)) {
             initSimpleSearchPoints((SimpleMaterialFunction) sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction
                     ());
-        }
-        else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction().getType().equals(MaterialFunctionType.COMPRESSED)) {
+        } else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction().getType().equals(MaterialFunctionType.COMPRESSED)) {
             CompressedMaterialWithoutRecrystalizationSoftening compressedMaterialWithoutRecrystalizationSoftening =
                     (CompressedMaterialWithoutRecrystalizationSoftening) sumMeanSquaredErrorsObjectiveFunction
                             .getMaterialFunction();
@@ -141,8 +139,8 @@ public class ApproximationFromTableWrappersTask {
                         .getMaterialFunctionSettingsMap().get(searchMethod.getType()).get
                         (simpleMaterialFunction.getType());
 
-        startPoint[0]=simpleMaterialFunctionSettings.getStartingKValue();
-        startPoint[1]=simpleMaterialFunctionSettings.getStartingNValue();
+        startPoint[0] = simpleMaterialFunctionSettings.getStartingKValue();
+        startPoint[1] = simpleMaterialFunctionSettings.getStartingNValue();
 
         simpleMaterialFunction.setParameterK(startPoint[0]);
         simpleMaterialFunction.setParameterN(startPoint[1]);
@@ -166,7 +164,7 @@ public class ApproximationFromTableWrappersTask {
         sumMeanSquaredErrorsObjectiveFunction.setMaterialFunction(materialFunction);
     }
 
-    public double getSumMeanSquaredErrorsValue() {
+    public double getObjectiveFunctionValue() {
         return optimizedValuesToTableWrappersConverter.getSumMeanSquaredErrorsValue();
     }
 
@@ -192,5 +190,17 @@ public class ApproximationFromTableWrappersTask {
 
     public void setStartPoint(double[] startPoint) {
         this.startPoint = startPoint;
+    }
+
+    public double[] getResultPoints() {
+        return resultPoints;
+    }
+
+    public void setResultPoints(double[] resultPoints) {
+        this.resultPoints = resultPoints;
+    }
+
+    public MaterialFunctionType getMaterialFunctionType() {
+        return sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction().getType();
     }
 }

@@ -23,13 +23,11 @@
             </p:dataTable>
 
             <div>
-                <h:outputLabel value="Parametr K :  #{tableView.optimizedParameterK}" ></h:outputLabel>
+                <h:outputLabel
+                        value="Znaleziona wartość minimum funkcji celu : #{tableView.sumMeanSquaredError}"></h:outputLabel>
             </div>
             <div>
-                <h:outputLabel value="Parametr N : #{tableView.optimizedParameterN}"></h:outputLabel>
-            </div>
-            <div>
-                <h:outputLabel value="Suma błędów średniokwadratowych : #{tableView.sumMeanSquaredError}"></h:outputLabel>
+                <p:inputTextarea rows="10" cols="200" value="#{tableView.parametersInfo}" disabled="true"/>
             </div>
         </ui:define>
     </ui:composition>

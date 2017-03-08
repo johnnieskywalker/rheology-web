@@ -7,10 +7,6 @@ import java.util.List;
 
 public class OptimizedValuesToTableWrappersConverter {
 
-    private double optimizedParameterK;
-
-    private double optimizedParameterN;
-
     private ObjectiveFunction objectiveFunction;
 
     private List<TableRowWrapper> tableRowWrappers;
@@ -25,8 +21,6 @@ public class OptimizedValuesToTableWrappersConverter {
     }
 
     private void fillCalculatedStressInRow(TableRowWrapper tableRowWrapper) {
-//        tableRowWrapper.setCalculatedStress(objectiveFunction.calculateMaterialStressInPoint
-//                (optimizedParameterK, optimizedParameterN, tableRowWrapper.getDeformation()));
         tableRowWrapper.setCalculatedStress(objectiveFunction.calculateMaterialStressInPoint(tableRowWrapper
                 .getDeformation()));
     }
@@ -42,22 +36,6 @@ public class OptimizedValuesToTableWrappersConverter {
             sumMeanSquaredErrors += tableRowWrapper.getMeanSquaredError();
         }
         return sumMeanSquaredErrors;
-    }
-
-    public double getOptimizedParameterK() {
-        return optimizedParameterK;
-    }
-
-    public void setOptimizedParameterK(double optimizedParameterK) {
-        this.optimizedParameterK = optimizedParameterK;
-    }
-
-    public double getOptimizedParameterN() {
-        return optimizedParameterN;
-    }
-
-    public void setOptimizedParameterN(double optimizedParameterN) {
-        this.optimizedParameterN = optimizedParameterN;
     }
 
     public ObjectiveFunction getObjectiveFunction() {

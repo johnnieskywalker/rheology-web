@@ -9,6 +9,7 @@ import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMateria
 import optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask;
 import org.primefaces.model.chart.LineChartModel;
 import view.TableView;
+import view.model.OptimizedParametersWrapperBuilder;
 import view.wrappers.TableRowWrapper;
 
 import javax.annotation.PostConstruct;
@@ -32,6 +33,9 @@ public class ViewsDataController {
 
     private ApproximationFromTableWrappersTask approximationFromTableWrappersTask = new
             ApproximationFromTableWrappersTask();
+
+    private OptimizedParametersWrapperBuilder optimizedParametersWrapperBuilder = new
+            OptimizedParametersWrapperBuilder(approximationFromTableWrappersTask);
 
     @PostConstruct
     public void initializeViewBeans() {
@@ -74,9 +78,9 @@ public class ViewsDataController {
     }
 
     private void updateParameterValuesDisplayedBelowTable() {
-        tableViewBean.setOptimizedParameterK(approximationFromTableWrappersTask.getOptimizedParameterKValue());
-        tableViewBean.setOptimizedParameterN(approximationFromTableWrappersTask.getOptimizedParameterNValue());
-        tableViewBean.setSumMeanSquaredError(approximationFromTableWrappersTask.getSumMeanSquaredErrorsValue());
+        tableViewBean.setSumMeanSquaredError(approximationFromTableWrappersTask.getObjectiveFunctionValue());
+        optimizedParametersWrapperBuilder.reloadOptimizedParameters();
+        tableViewBean.setParametersInfo(optimizedParametersWrapperBuilder.getParametersInfo());
     }
 
     public LineChartModel loadDataFromTableToChart() {
@@ -87,22 +91,22 @@ public class ViewsDataController {
         return tableWrappersToLineChartModelConverter.buildLineChartModelFromTableData();
     }
 
-    public void simpleMaterialFunction(){
+    public void simpleMaterialFunction() {
         approximationFromTableWrappersTask.setMaterialFunction(new SimpleMaterialFunction());
     }
 
-    public void compressedMaterialWithoutRecrystalizationSofteningFunction(){
+    public void compressedMaterialWithoutRecrystalizationSofteningFunction() {
         approximationFromTableWrappersTask.setMaterialFunction(new CompressedMaterialWithoutRecrystalizationSoftening());
     }
 
-    public void setHookeJeevesAlgorithm(){
+    public void setHookeJeevesAlgorithm() {
         approximationFromTableWrappersTask.setSearchMethod(new HookeAlgorithm());
     }
 
-    public void setPowellAlgorithm(){
+    public void setPowellAlgorithm() {
         double startingK = 140.0;
         double startingN = 10.0;
-        double[] startPoint= {startingK,startingN};
+        double[] startPoint = {startingK, startingN};
         approximationFromTableWrappersTask.setStartPoint(startPoint);
         approximationFromTableWrappersTask.setSearchMethod(new PowellAlgorithm());
     }

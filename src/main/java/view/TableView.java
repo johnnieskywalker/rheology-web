@@ -1,6 +1,5 @@
 package view;
 
-import utils.ConstantValues;
 import view.wrappers.TableRowWrapper;
 
 import javax.faces.bean.ManagedBean;
@@ -14,11 +13,9 @@ public class TableView {
 
     private List<TableRowWrapper> tableRowWrappers = new ArrayList<>();
 
-    private Double optimizedParameterK = ConstantValues.STARTING_K_VALUE;
-
-    private Double optimizedParameterN = ConstantValues.STARTING_N_VALUE;
-
     private Double sumMeanSquaredError;
+
+    private String parametersInfo="";
 
     public List<TableRowWrapper> getTableRowWrappers() {
         return tableRowWrappers;
@@ -28,27 +25,19 @@ public class TableView {
         this.tableRowWrappers = tableRowWrappers;
     }
 
-    public Double getOptimizedParameterK() {
-        return optimizedParameterK;
-    }
-
-    public void setOptimizedParameterK(Double optimizedParameterK) {
-        this.optimizedParameterK = optimizedParameterK;
-    }
-
-    public Double getOptimizedParameterN() {
-        return optimizedParameterN;
-    }
-
-    public void setOptimizedParameterN(Double optimizedParameterN) {
-        this.optimizedParameterN = optimizedParameterN;
-    }
-
     public Double getSumMeanSquaredError() {
         return sumMeanSquaredError;
     }
 
     public void setSumMeanSquaredError(Double sumMeanSquaredError) {
         this.sumMeanSquaredError = sumMeanSquaredError;
+    }
+
+    public String getParametersInfo() {
+        return parametersInfo;
+    }
+
+    public void setParametersInfo(String parametersInfo) {
+        this.parametersInfo = parametersInfo;
     }
 }
