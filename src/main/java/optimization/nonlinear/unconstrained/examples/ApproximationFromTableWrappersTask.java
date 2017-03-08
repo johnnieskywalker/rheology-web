@@ -8,6 +8,7 @@ import optimization.nonlinear.unconstrained.core.SumRootMeanSquaredErrorsObjecti
 import optimization.nonlinear.unconstrained.core.materialFunctions.CompressedMaterialWithoutRecrystalizationSoftening;
 import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
 import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
+import settings.CompressedMaterialFunctionSettings;
 import utils.ConstantValues;
 import view.wrappers.TableRowWrapper;
 
@@ -21,7 +22,10 @@ public class ApproximationFromTableWrappersTask {
 
     private SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumRootMeanSquaredErrorsObjectiveFunction();
 
-//    private int numberOfVariables = 2;
+    private CompressedMaterialFunctionSettings compressedMaterialFunctionSettings = new
+            CompressedMaterialFunctionSettings();
+
+    //    private int numberOfVariables = 2;
     private double rho = SumRootMeanSquaredErrorsObjectiveFunction.STRPSIZE_GEOMETRIC_SHRINK_RHO;
     private double epsilon = HookeAlgorithm.ENDING_VALUE_OF_STEPSIZE;
     private double[] resultPoints = new double[HookeAlgorithm.MAXIMUM_NUMBER_OF_VARIABLES];
@@ -44,7 +48,7 @@ public class ApproximationFromTableWrappersTask {
             startPoint[HookeAlgorithm.INDEX_ONE] = ConstantValues.STARTING_N_VALUE;
             runHookeJeeves();
         } else {
-            if(searchMethod instanceof SimpleMaterialFunction) {
+            if (searchMethod instanceof SimpleMaterialFunction) {
                 startPoint[0] = 140.0;
                 startPoint[1] = 10.0;
             }
@@ -73,32 +77,30 @@ public class ApproximationFromTableWrappersTask {
             simpleMaterialFunction.setParameterK(startPoint[0]);
             simpleMaterialFunction.setParameterN(startPoint[1]);
             sumMeanSquaredErrorsObjectiveFunction.setMaterialFunction(simpleMaterialFunction);
-        }
-        else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction() instanceof CompressedMaterialWithoutRecrystalizationSoftening){
+        } else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction() instanceof CompressedMaterialWithoutRecrystalizationSoftening) {
             CompressedMaterialWithoutRecrystalizationSoftening compressedMaterialWithoutRecrystalizationSoftening =
                     (CompressedMaterialWithoutRecrystalizationSoftening) sumMeanSquaredErrorsObjectiveFunction
-            .getMaterialFunction();
+                            .getMaterialFunction();
 
-            double startingR0 = 1.0;
-            double startingK0 = 4.0;
-            double startingN = 1.0;
-            double startingBeta = 1.0;
-            double startingKs = 1.0;
-            double startingBetas = 1.0;
-            double startingM = 6.0;
+            double startingR0 = compressedMaterialFunctionSettings.getStartingR0();
+            double startingK0 = compressedMaterialFunctionSettings.getStartingK0();
+            double startingN = compressedMaterialFunctionSettings.getStartingN();
+            double startingBeta = compressedMaterialFunctionSettings.getStartingBeta();
+            double startingKs = compressedMaterialFunctionSettings.getStartingKs();
+            double startingBetas = compressedMaterialFunctionSettings.getStartingBetas();
+            double startingM = compressedMaterialFunctionSettings.getStartingM();
 
-            startPoint=new double[7];
-            startPoint[0]=startingR0;
-            startPoint[1]=startingK0;
-            startPoint[2]=startingN;
-            startPoint[3]=startingBeta;
-            startPoint[4]=startingKs;
-            startPoint[5]=startingBetas;
-            startPoint[6]=startingM;
+            startPoint = new double[7];
+            startPoint[0] = startingR0;
+            startPoint[1] = startingK0;
+            startPoint[2] = startingN;
+            startPoint[3] = startingBeta;
+            startPoint[4] = startingKs;
+            startPoint[5] = startingBetas;
+            startPoint[6] = startingM;
 
-
-            double processTemperature = 1200.0;
-            double processStrainRate = 1.0;
+            double processTemperature = compressedMaterialFunctionSettings.getProcessTemperature();
+            double processStrainRate = compressedMaterialFunctionSettings.getProcessStrainRate();
 
 
             compressedMaterialWithoutRecrystalizationSoftening.setR0(startingR0);

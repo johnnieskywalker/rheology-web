@@ -14,6 +14,8 @@
 
 package optimization.nonlinear.unconstrained.core;
 
+import settings.SearchMethodType;
+
 public class HookeAlgorithm implements SearchMethod {
     public static final int MAXIMUM_NUMBER_OF_VARIABLES = 250;
 
@@ -321,6 +323,11 @@ public class HookeAlgorithm implements SearchMethod {
         private boolean furtherOptimisticStepFailed() {
             return newFunctionValue >= previousFunctionValue;
         }
+    }
+
+    @Override
+    public SearchMethodType getType() {
+        return SearchMethodType.HOOKE;
     }
 
     public void setCurrentSearchPoints(double[] currentSearchPoints) {

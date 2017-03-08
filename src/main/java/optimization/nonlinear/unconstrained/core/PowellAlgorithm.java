@@ -3,6 +3,7 @@ package optimization.nonlinear.unconstrained.core;
 import de.xypron.jcobyla.Calcfc;
 import de.xypron.jcobyla.Cobyla;
 import de.xypron.jcobyla.CobylaExitStatus;
+import settings.SearchMethodType;
 
 public class PowellAlgorithm implements SearchMethod {
 
@@ -44,5 +45,10 @@ public class PowellAlgorithm implements SearchMethod {
 
     public void setCurrentSearchPoints(double[] currentSearchPoints){
         this.currentSearchPoints = currentSearchPoints;
+    }
+
+    @Override
+    public SearchMethodType getType() {
+        return SearchMethodType.POWELL;
     }
 }

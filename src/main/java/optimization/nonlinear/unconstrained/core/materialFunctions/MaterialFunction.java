@@ -1,5 +1,7 @@
 package optimization.nonlinear.unconstrained.core.materialFunctions;
 
+import settings.MaterialFunctionType;
+
 import java.util.List;
 
 public interface MaterialFunction {
@@ -10,4 +12,6 @@ public interface MaterialFunction {
             experimentalDeformationValue);
 
     void setNewOptimizedParameterValues(double[] newOptimizedParameterValues) throws IllegalArgumentException;
+
+    MaterialFunctionType getType();
 }

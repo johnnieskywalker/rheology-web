@@ -1,5 +1,7 @@
 package optimization.nonlinear.unconstrained.core;
 
+import settings.SearchMethodType;
+
 public interface SearchMethod {
 
     /**
@@ -29,5 +31,7 @@ public interface SearchMethod {
 
     public double setNewParameterValuesAndFindMaterialFunctionValue(ObjectiveFunction objectiveFunction, double[]
             newFunctionArguments);
+
+    public SearchMethodType getType();
 
 }

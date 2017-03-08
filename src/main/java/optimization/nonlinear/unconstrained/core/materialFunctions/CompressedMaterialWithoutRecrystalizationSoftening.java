@@ -1,5 +1,7 @@
 package optimization.nonlinear.unconstrained.core.materialFunctions;
 
+import settings.MaterialFunctionType;
+
 import java.util.List;
 
 import static java.lang.Math.*;
@@ -79,6 +81,11 @@ public class CompressedMaterialWithoutRecrystalizationSoftening implements Mater
              betas= newOptimizedParameterValues[5];
              m= newOptimizedParameterValues[6];
         }
+    }
+
+    @Override
+    public MaterialFunctionType getType() {
+        return MaterialFunctionType.COMPRESSED;
     }
 
     @Override

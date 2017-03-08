@@ -1,5 +1,7 @@
 package optimization.nonlinear.unconstrained.core.materialFunctions;
 
+import settings.MaterialFunctionType;
+
 import java.util.List;
 
 public class SimpleMaterialFunction implements MaterialFunction {
@@ -32,6 +34,11 @@ public class SimpleMaterialFunction implements MaterialFunction {
     @Deprecated
     public double calculateMaterialStressInPoint(List<Double> optimizedParameters, double experimentalDeformationValue) {
         return calculateMaterialStressInPoint(optimizedParameters.get(0), optimizedParameters.get(1), experimentalDeformationValue);
+    }
+
+    @Override
+    public MaterialFunctionType getType() {
+        return MaterialFunctionType.SIMPLE;
     }
 
     public double calculateMaterialStressInPoint(double parameterK, double parameterN, double experimentalDeformationValue) {
