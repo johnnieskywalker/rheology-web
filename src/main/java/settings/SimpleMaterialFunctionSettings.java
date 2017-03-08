@@ -2,7 +2,7 @@ package settings;
 
 import utils.ConstantValues;
 
-public class SimpleMaterialFunctionSettings {
+public class SimpleMaterialFunctionSettings extends MaterialFunctionSettings {
     double startingKValue = ConstantValues.STARTING_K_VALUE;
     double startingNValue = ConstantValues.STARTING_N_VALUE;
 

@@ -9,7 +9,9 @@ import optimization.nonlinear.unconstrained.core.materialFunctions.CompressedMat
 import optimization.nonlinear.unconstrained.core.materialFunctions.MaterialFunction;
 import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMaterialFunction;
 import settings.CompressedMaterialFunctionSettings;
-import utils.ConstantValues;
+import settings.MaterialFunctionType;
+import settings.SettingsProvider;
+import settings.SimpleMaterialFunctionSettings;
 import view.wrappers.TableRowWrapper;
 
 import java.util.List;
@@ -22,8 +24,10 @@ public class ApproximationFromTableWrappersTask {
 
     private SumRootMeanSquaredErrorsObjectiveFunction sumMeanSquaredErrorsObjectiveFunction = new SumRootMeanSquaredErrorsObjectiveFunction();
 
-    private CompressedMaterialFunctionSettings compressedMaterialFunctionSettings = new
-            CompressedMaterialFunctionSettings();
+//    private CompressedMaterialFunctionSettings compressedMaterialFunctionSettings = new
+//            CompressedMaterialFunctionSettings();
+
+    SettingsProvider settingsProvider = new SettingsProvider();
 
     //    private int numberOfVariables = 2;
     private double rho = SumRootMeanSquaredErrorsObjectiveFunction.STRPSIZE_GEOMETRIC_SHRINK_RHO;
@@ -44,14 +48,14 @@ public class ApproximationFromTableWrappersTask {
         initStartPoints();
 
         if (searchMethod instanceof HookeAlgorithm) {
-            startPoint[HookeAlgorithm.INDEX_ZERO] = ConstantValues.STARTING_K_VALUE;
-            startPoint[HookeAlgorithm.INDEX_ONE] = ConstantValues.STARTING_N_VALUE;
+//            startPoint[HookeAlgorithm.INDEX_ZERO] = ConstantValues.STARTING_K_VALUE;
+//            startPoint[HookeAlgorithm.INDEX_ONE] = ConstantValues.STARTING_N_VALUE;
             runHookeJeeves();
         } else {
-            if (searchMethod instanceof SimpleMaterialFunction) {
-                startPoint[0] = 140.0;
-                startPoint[1] = 10.0;
-            }
+//            if (searchMethod instanceof SimpleMaterialFunction) {
+//                startPoint[0] = 140.0;
+//                startPoint[1] = 10.0;
+//            }
             searchMethod.setCurrentSearchPoints(startPoint);
             searchMethod.findMinimum(sumMeanSquaredErrorsObjectiveFunction);
             resultPoints = searchMethod.getResultPointCoordinates();
@@ -74,13 +78,25 @@ public class ApproximationFromTableWrappersTask {
 
             searchMethod.setCurrentSearchPoints(startPoint);
             SimpleMaterialFunction simpleMaterialFunction = new SimpleMaterialFunction();
-            simpleMaterialFunction.setParameterK(startPoint[0]);
-            simpleMaterialFunction.setParameterN(startPoint[1]);
             sumMeanSquaredErrorsObjectiveFunction.setMaterialFunction(simpleMaterialFunction);
-        } else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction() instanceof CompressedMaterialWithoutRecrystalizationSoftening) {
+
+            initSimpleSearchPoints(simpleMaterialFunction);
+
+        }
+        else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction().getType().equals(MaterialFunctionType
+                .SIMPLE)){
+            initSimpleSearchPoints((SimpleMaterialFunction) sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction
+                    ());
+        }
+        else if (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction().getType().equals(MaterialFunctionType.COMPRESSED)) {
             CompressedMaterialWithoutRecrystalizationSoftening compressedMaterialWithoutRecrystalizationSoftening =
                     (CompressedMaterialWithoutRecrystalizationSoftening) sumMeanSquaredErrorsObjectiveFunction
                             .getMaterialFunction();
+
+            CompressedMaterialFunctionSettings compressedMaterialFunctionSettings =
+                    (CompressedMaterialFunctionSettings) settingsProvider
+                            .getMaterialFunctionSettingsMap().get(searchMethod.getType()).get
+                                    (sumMeanSquaredErrorsObjectiveFunction.getMaterialFunction().getType());
 
             double startingR0 = compressedMaterialFunctionSettings.getStartingR0();
             double startingK0 = compressedMaterialFunctionSettings.getStartingK0();
@@ -116,6 +132,20 @@ public class ApproximationFromTableWrappersTask {
 
             sumMeanSquaredErrorsObjectiveFunction.setMaterialFunction(compressedMaterialWithoutRecrystalizationSoftening);
         }
+
+    }
+
+    private void initSimpleSearchPoints(SimpleMaterialFunction simpleMaterialFunction) {
+        SimpleMaterialFunctionSettings simpleMaterialFunctionSettings = (SimpleMaterialFunctionSettings)
+                settingsProvider
+                        .getMaterialFunctionSettingsMap().get(searchMethod.getType()).get
+                        (simpleMaterialFunction.getType());
+
+        startPoint[0]=simpleMaterialFunctionSettings.getStartingKValue();
+        startPoint[1]=simpleMaterialFunctionSettings.getStartingNValue();
+
+        simpleMaterialFunction.setParameterK(startPoint[0]);
+        simpleMaterialFunction.setParameterN(startPoint[1]);
     }
 
     public void setTableRowWrappers(List<TableRowWrapper> tableRowWrappers) {

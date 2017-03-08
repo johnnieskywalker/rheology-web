@@ -1,6 +1,6 @@
 package settings;
 
-public class CompressedMaterialFunctionSettings {
+public class CompressedMaterialFunctionSettings extends MaterialFunctionSettings {
 
     double startingR0 = 1.0;
     double startingK0 = 4.0;
