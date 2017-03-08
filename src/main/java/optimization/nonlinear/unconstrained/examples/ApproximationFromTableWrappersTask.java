@@ -122,8 +122,8 @@ public class ApproximationFromTableWrappersTask {
 
     public List<TableRowWrapper> loadResultTableRowWrappers() {
         optimizedValuesToTableWrappersConverter.setObjectiveFunction(sumMeanSquaredErrorsObjectiveFunction);
-        optimizedValuesToTableWrappersConverter.setOptimizedParameterK(getOptimizedParameterKValue());
-        optimizedValuesToTableWrappersConverter.setOptimizedParameterN(getOptimizedParameterNValue());
+//        optimizedValuesToTableWrappersConverter.setOptimizedParameterK(getOptimizedParameterKValue());
+//        optimizedValuesToTableWrappersConverter.setOptimizedParameterN(getOptimizedParameterNValue());
 
 
         optimizedValuesToTableWrappersConverter.fillTableWrappersWithCalculatedValues();
