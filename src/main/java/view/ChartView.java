@@ -38,10 +38,10 @@ public class ChartView implements Serializable {
 
     private void createAxes() {
         Axis yAxis = lineModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Naprężenie (ε)");
+        yAxis.setLabel("Naprężenie (σ)");
 
         Axis xAxis = lineModel.getAxis(AxisType.X);
-        xAxis.setLabel("Odkształcenie (σ)");
+        xAxis.setLabel("Odkształcenie (ε)");
     }
 
     public LineChartModel loadDataFromTableToChart() {
