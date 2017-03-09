@@ -14,3 +14,8 @@
     color: chartreuse;
     font-family: Consolas;
 }
+
+.ui-datatable-footer {
+    height: 80px;
+    background-color: blanchedalmond;
+}

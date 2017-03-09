@@ -9,6 +9,7 @@ import optimization.nonlinear.unconstrained.core.materialFunctions.SimpleMateria
 import optimization.nonlinear.unconstrained.examples.ApproximationFromTableWrappersTask;
 import org.primefaces.model.chart.LineChartModel;
 import view.TableView;
+import view.model.OptimizedParameterWrapper;
 import view.model.OptimizedParametersWrapperBuilder;
 import view.wrappers.TableRowWrapper;
 
@@ -109,6 +110,14 @@ public class ViewsDataController {
         double[] startPoint = {startingK, startingN};
         approximationFromTableWrappersTask.setStartPoint(startPoint);
         approximationFromTableWrappersTask.setSearchMethod(new PowellAlgorithm());
+    }
+
+    public void setOptimizedParameterWrappers(List<OptimizedParameterWrapper> optimizedParameterWrappers) {
+        optimizedParametersWrapperBuilder.setOptimizedParameterWrappers(optimizedParameterWrappers);
+    }
+
+    public List<OptimizedParameterWrapper> getOptimizedParameterWrappers() {
+        return optimizedParametersWrapperBuilder.getOptimizedParameterWrappers();
     }
 
     public Path getLastUploadedFilePath() {

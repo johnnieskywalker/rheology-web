@@ -26,6 +26,21 @@
                 }
             </script>
 
+            <p:dataTable var="parameter" value="#{viewsDataController.optimizedParameterWrappers}" stickyHeader="true">
+                <p:column headerText="Parametr równania">
+                    <h:outputText value="#{parameter.name}"/>
+                </p:column>
+                <p:column headerText="Wartość początkowa">
+                    <h:outputText value="#{parameter.initialValue}"/>
+                </p:column>
+                <p:column headerText="Wartość dla której znaleziono minimum">
+                    <h:outputText value="#{parameter.resultValue}"/>
+                </p:column>
+                <f:facet name="footer" style="height: 80 px;">
+                    <h:outputText value="Znaleziona wartość minimum funkcji celu : #{tableView.sumMeanSquaredError}"/>
+                </f:facet>
+            </p:dataTable>
+
         </ui:define>
 
     </ui:composition>

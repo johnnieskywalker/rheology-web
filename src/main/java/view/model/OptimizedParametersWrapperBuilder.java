@@ -24,14 +24,6 @@ public class OptimizedParametersWrapperBuilder {
                     .getStartPoint()[1],approximationFromTableWrappersTask.getResultPoints()[1]));
         }
         if (approximationFromTableWrappersTask.getMaterialFunctionType().equals(MaterialFunctionType.COMPRESSED)){
-//            startPoint = new double[7];
-//            startPoint[0] = startingR0;
-//            startPoint[1] = startingK0;
-//            startPoint[2] = startingN;
-//            startPoint[3] = startingBeta;
-//            startPoint[4] = startingKs;
-//            startPoint[5] = startingBetas;
-//            startPoint[6] = startingM;
             optimizedParameterWrappers.add(new OptimizedParameterWrapper("R0",approximationFromTableWrappersTask
                     .getStartPoint()[0],approximationFromTableWrappersTask.getResultPoints()[0]));
             optimizedParameterWrappers.add(new OptimizedParameterWrapper("K0",approximationFromTableWrappersTask
@@ -57,6 +49,10 @@ public class OptimizedParametersWrapperBuilder {
                 .getResultValue()+" "+System.getProperty("line.separator"));
     });
         return parametersInfo.toString();
+    }
+
+    public void setOptimizedParameterWrappers(List<OptimizedParameterWrapper> optimizedParameterWrappers) {
+        this.optimizedParameterWrappers = optimizedParameterWrappers;
     }
 
     public List<OptimizedParameterWrapper> getOptimizedParameterWrappers() {
