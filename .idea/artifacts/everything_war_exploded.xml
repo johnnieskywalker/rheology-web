@@ -48,6 +48,8 @@
           <element id="library" level="project" name="Maven: org.codehaus.plexus:plexus-component-annotations:1.5.5" />
           <element id="library" level="project" name="Maven: org.sonatype.aether:aether-util:1.7" />
           <element id="library" level="project" name="Maven: org.eclipse.aether:aether-util:0.9.0.M2" />
+          <element id="library" level="project" name="Maven: com.sun.el:el-ri:1.0" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.34" />
         </element>
       </element>
       <element id="directory" name="META-INF">
