@@ -5,21 +5,21 @@
 <web-app>
     <display-name>Archetype Created Web Application</display-name>
 
-    <listener>
-        <listener-class>
-            org.springframework.web.context.ContextLoaderListener
-        </listener-class>
-    </listener>
-    <listener>
-        <listener-class>
-            org.springframework.web.context.request.RequestContextListener
-        </listener-class>
-    </listener>
 
     <!--<welcome-uploadedFile-list>-->
         <!--<welcome-uploadedFile>index.xhtml</welcome-uploadedFile>-->
     <!--</welcome-uploadedFile-list>-->
-
+    <context-param>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+        <description>State saving method: 'client' or 'server' (=default). See JSF Specification 2.5.2</description>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
     <!-- JSF Mapping -->
     <servlet>
         <servlet-name>facesServlet</servlet-name>

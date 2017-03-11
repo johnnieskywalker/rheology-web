@@ -9,16 +9,16 @@
 	<h:form>
 		<h3>Logowanie do aplikacji Rheology Web</h3>
 		<h:outputText value="Username" />
-		<h:inputText id="username" value="#{login.user}"></h:inputText>
-		<h:message for="username"></h:message>
+		<h:inputText id="userName" value="#{loginView.userName}"></h:inputText>
+		<h:message for="userName"></h:message>
 		<br /><br />
 		
 		<h:outputText value="Password" />
-		<h:inputSecret id="password" value="#{login.pwd}"></h:inputSecret>
+		<h:inputSecret id="password" value="#{loginView.password}"></h:inputSecret>
 		<h:message for="password"></h:message>
 		<br /><br />
 		
-		<h:commandButton action="#{login.validateUsernamePassword}"
+		<h:commandButton action="#{loginView.validateUsernamePassword}"
 			value="Login"></h:commandButton>
 	</h:form>
 </h:body>

@@ -1,4 +1,4 @@
-package com.journaldev.jsf.util;
+package database.util;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
