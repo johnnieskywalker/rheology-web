@@ -51,8 +51,9 @@
 
 
             <f:facet name="options">
-                <p:commandButton type="button" value="Logout" icon="ui-icon-extlink"
-                                 style="background-color: cornflowerblue;"/>
+
+                <p:commandButton type="" value="Wyloguj"  action="#{loginView.logout}"  icon="ui-icon-extlink"
+                                 style="background-color: cornflowerblue;"  update="@all"/>
             </f:facet>
         </p:menubar>
 
