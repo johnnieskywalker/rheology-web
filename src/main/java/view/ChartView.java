@@ -31,17 +31,17 @@ public class ChartView implements Serializable {
 
     private void createLineModels() {
         lineModel = loadDataFromTableToChart();
-        lineModel.setTitle("ε(σ)");
+        lineModel.setTitle("σ(ε)");
         lineModel.setLegendPosition("e");
         createAxes();
     }
 
     private void createAxes() {
         Axis yAxis = lineModel.getAxis(AxisType.Y);
-        yAxis.setLabel("Naprężenie (σ)");
+        yAxis.setLabel("Naprężenie (σ), MPa");
 
         Axis xAxis = lineModel.getAxis(AxisType.X);
-        xAxis.setLabel("Odkształcenie (ε)");
+        xAxis.setLabel("Odkształcenie (ε), -");
     }
 
     public LineChartModel loadDataFromTableToChart() {

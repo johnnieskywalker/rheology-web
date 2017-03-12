@@ -52,9 +52,7 @@ public class LoginView implements Serializable {
 		this.userName = userName;
 	}
 
-	//validate login
 	public String validateUsernamePassword() {
-//		boolean valid = LoginDAO.validate(userName, password);
 
 		boolean valid = userService.authenticateUser(userName,password);
 		if (valid) {
@@ -71,7 +69,6 @@ public class LoginView implements Serializable {
 		}
 	}
 
-	//logout event, invalidate session
 	public String logout() {
 		HttpSession session = SessionUtils.getSession();
 		session.invalidate();
